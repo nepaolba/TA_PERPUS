@@ -7,6 +7,7 @@ class Pengembalian extends CI_Controller
    public function __construct()
    {
       parent::__construct();
+      checkLogin('admin');
       $this->load->model('Pengembalian_model', 'kembali');
       $this->load->model('Peminjaman_model', 'peminjaman');
       $this->load->model('Anggota_model', 'anggota');
@@ -23,60 +24,77 @@ class Pengembalian extends CI_Controller
       $this->viewAdmin('pengembalian/index', $data);
    }
 
-   public function pengajuan()
+   public function individu()
    {
-      $data = ['breadcrumb' => "PENGEMBALIAN BUKU", 'pengembalian' => '', 'js' => 'pengembalian.js'];
-      $this->viewAdmin('pengembalian/pengembalian', $data);
+      $dataPeminjam = $this->db->select('*')
+         ->from('peminjaman')
+         ->join('anggota', 'anggota.kd_anggota=peminjaman.nis_nip')
+         ->join('buku', 'buku.kd_buku=peminjaman.kd_buku')
+         ->where('status !=', 1)
+         ->where('jenis_pinjam', 0)
+         ->group_by('anggota.kd_anggota')
+         ->get()
+         ->result();
+      $data = [
+         'breadcrumb' => "PENGEMBALIAN INDIVIDU",
+         'peminjaman' => $dataPeminjam,
+         'js' => 'pengembalian_individu.js'
+      ];
+      $this->viewAdmin('pengembalian/pengembalian_individu', $data);
    }
 
-   public function ambilSemuaDataAnggota($jenisPinjam)
+
+   public function daftarBuku()
    {
-      $dataAnggota =  $this->kembali->ambilDataAnggota($jenisPinjam);
-      $dataAnggotaFiltered = array_map(function ($anggota) {
-         return [
-            "kd_anggota" => $anggota["kd_anggota"],
-            "nama_anggota" => $anggota["nama_anggota"]
-         ];
-      }, $dataAnggota);
-      echo json_encode($dataAnggotaFiltered);
+
+      $kdAnggota = $this->input->post('kd_anggota');
+      $dataBuku = $this->db->select('*')
+         ->from('peminjaman')
+         ->join('buku', 'buku.kd_buku=peminjaman.kd_buku', 'left')
+         ->join('rak', 'buku.id_rak=rak.id_rak', 'left')
+         ->join('kategori', 'buku.kd_kategori=kategori.kd_kategori', 'left')
+         ->where('peminjaman.status !=', 1)
+         ->where('jenis_pinjam', 0)
+         ->where('nis_nip', $kdAnggota)
+         ->get()->result();
+      $dataAnggota = $this->db->select('kd_anggota,alamat,jk,nama_anggota,nohp,status_anggota,tgl_daftar_anggota')
+         ->from('anggota')
+         ->where('kd_anggota', $kdAnggota)
+         ->get()->row();
+      $data = [
+         'breadcrumb' => "PENGEMBALIAN INDIVIDU",
+         'dataBuku' => $dataBuku,
+         'dataAnggota' => $dataAnggota,
+         'js' => 'pengembalian_individu.js'
+      ];
+      $this->viewAdmin('pengembalian/daftarBukuIndividu', $data);
    }
 
-   public function detailPeminjamanAnggota($kdAnggota, $jenisPinjam)
-   {
-      $detailAnggota = $this->kembali->detailPeminjamanAnggota($kdAnggota, $jenisPinjam);
-      unset($detailAnggota['password']);
-      echo json_encode($detailAnggota);
-   }
-   public function submitPengembalian()
+
+
+   public function submitPengembalian($idPinjam, $kd_buku)
    {
       $data = [
-         "kd_buku" => $this->input->post('kd_buku'),
-         "kd_anggota" => $this->input->post('kd_anggota'),
-         "kd_petugas" => $this->input->post('kd_petugas'),
-         "jumlah_kembali" => $this->input->post('jumlah_pinjam'),
+         "kd_petugas" => $this->session->userdata('id'),
+         "jumlah_kembali" => 1,
          "tgl" => date("Y-m-d H:i:s"),
-         "denda" => "2000",
-         "id_pinjam" => $this->input->post('id_pinjam'),
+         "denda" => "0",
+         "id_pinjam" => $idPinjam,
       ];
+      // var_dump($data);
+
 
       $insert = $this->kembali->add($data);
 
       if ($insert) {
-         $ambilDataBuku = $this->book->getOne($this->input->post('kd_buku'));
-         // $ambilDataPeminjam = $this->peminjaman->getOne($this->input->post('id_pinjam'));
-         $sisa_stok = (int) $ambilDataBuku['sisa_stok'] + (int) $this->input->post('jumlah_pinjam');
-         $jumlah_dipinjam = (int) $ambilDataBuku['jumlah_dipinjam'] - (int) $this->input->post('jumlah_pinjam');
-         $this->book->update(['sisa_stok' => $sisa_stok, "jumlah_dipinjam" => $jumlah_dipinjam], $this->input->post('kd_buku'));
-         $this->kembali->update("peminjaman", ["status" => 1], $this->input->post('id_pinjam'), "id_pinjam");
-         return true;
+         $ambilDataBuku = $this->book->getOne($kd_buku);
+         $sisa_stok = (int) $ambilDataBuku['sisa_stok'] + 1;
+         $jumlah_dipinjam = (int) $ambilDataBuku['jumlah_dipinjam'] - 1;
+         $this->book->update(['sisa_stok' => $sisa_stok, "jumlah_dipinjam" => $jumlah_dipinjam], $kd_buku);
+         $this->kembali->update("peminjaman", ["status" => 1], $idPinjam, "id_pinjam");
+         notif('Data Berhasil Disimpan', 'success', 'Pengembalian');
       } else {
-         return false;
+         notif('Data Berhasil Disimpan', 'error', 'Pengembalian');
       }
    }
-   // public function getAjaxWhere(...$var)
-   // {
-   //    // var_dump($var);
-   //    $detailData = $this->kembali->getDetail($var[0], $var[1]);
-   //    echo json_encode($detailData);
-   // }
 }

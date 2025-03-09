@@ -7,8 +7,6 @@ class Auth extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Auth_model', 'auth');
-		// $this->load->helper('Helper Name');
-
 	}
 
 	public function index()
@@ -24,7 +22,7 @@ class Auth extends CI_Controller
 		if ($cek_username) {
 			$cekPass = $this->__cekPassword($cek_username['password']);
 			if ($cekPass) {
-				$setSession = ['nama' => $cek_username['nama_petugas'], 'id' => $cek_username['kd_petugas'], 'role' => 'admin'];
+				$setSession = ['nama' => $cek_username['nama_petugas'], 'id' => $cek_username['kd_petugas'], 'role' => 'admin', 'dateLog' => date('Y-m-d H:s:i')];
 				$this->session->set_userdata($setSession);
 				redirect('Admin');
 			} else {
@@ -41,9 +39,9 @@ class Auth extends CI_Controller
 		if ($cek_username) {
 			$cekPass = $this->__cekPassword($cek_username['password']);
 			if ($cekPass) {
-				$setSession = ['nama' => $cek_username['nama_anggota'], 'id' => $cek_username['kd_anggota'], 'role' => 'user'];
+				$setSession = ['nama' => $cek_username['nama_anggota'], 'id' => $cek_username['kd_anggota'], 'role' => 'user', 'dateLog' => date('Y-m-d H:s:i')];
 				$this->session->set_userdata($setSession);
-				redirect('Anggota');
+				redirect('Welcome');
 			} else {
 				$this->session->set_flashdata('msg', 'Password Salah.');
 				redirect('Auth');

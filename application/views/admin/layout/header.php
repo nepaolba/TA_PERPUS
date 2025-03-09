@@ -5,7 +5,8 @@
             <span class="logo-mini">
                <i class="fa fa-bank"></i>
             </span>
-            <span class="logo-lg text-info"><i class="fa fa-bank text-aqua"></i> PERPUSTAKAAN</span>
+            <span class="logo-lg text-info"><i class="fa fa-bank text-aqua"></i> PERPUSTAKAAN <?= time_ago($this->session->userdata('dateLog')); ?></span>
+
          </a>
          <nav class="navbar navbar-static-top bg-white">
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -13,12 +14,12 @@
             </a>
             <div class="navbar-custom-menu">
                <ul class="nav navbar-nav">
-                  <li class="dropdown notifications-menu">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <!-- <li class="dropdown notifications-menu"> -->
+                  <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell"></i>
                         <span class="label label-danger">10</span>
-                     </a>
-                     <ul class="dropdown-menu">
+                     </a> -->
+                  <!-- <ul class="dropdown-menu">
                         <li class="header">You have 10 notifications</li>
                         <li>
                            <ul class="menu">
@@ -51,7 +52,7 @@
                            </ul>
                         </li>
                         <li class="footer"><a href="#">View all</a></li>
-                     </ul>
+                     </ul> -->
                   </li>
                   <li class="dropdown user user-menu">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -62,8 +63,7 @@
                         <li class="user-header">
                            <img src="<?= base_url('assets/') ?>dist/img/avatar-1.png" class="img-circle" alt="User Image">
                            <p>
-                              Alexander Pierce - Administrator
-                              <small>Member since Nov. 2012</small>
+                              <?= nameLogin()[0] ?> - Administrator
                            </p>
                            <br><br>
                         </li>

@@ -1,8 +1,10 @@
 <div class="row">
+   <div id="flash" data-flash="<?= $this->session->flashdata('msg') ?>" data-class="<?= $this->session->flashdata('class') ?>"></div>
    <div class="col-lg-12">
       <div class="box box-solid new-shadow">
          <div class="box-header">
-            <a href="<?= base_url('Pengembalian/pengajuan') ?>" class="btn btn-sm bg-purple"><i class="fa fa-plus-circle"></i> PENGEMBALIAN BARU</a>
+            <a href="<?= base_url('Pengembalian/individu') ?>" class="btn btn-sm bg-purple"><i class="fa fa-plus-circle"></i> PENGEMBALIAN INDIVIDU</a>
+            <a href="<?= base_url('Pengembalian/pengajuan') ?>" class="btn btn-sm bg-purple"><i class="fa fa-plus-circle"></i> PENGEMBALIAN KELAS</a>
          </div>
          <div class="box-body">
             <table class="table" id="example1">
@@ -37,7 +39,7 @@
                            <!-- <div class="d-flex justify-content-between"> -->
                            <a href="" class="btn bg-teal btn-xs mb2"><i class="glyphicon glyphicon-zoom-in"></i> <small>DETAIL</small></a>
                            <!-- <a href="" class="btn bg-orange btn-xs mb2"><i class="glyphicon glyphicon-pencil"></i> <small>UBAH</small></a> -->
-                           <a href="" class="btn bg-maroon btn-xs mb2"><i class="glyphicon glyphicon-trash"></i> <small>HAPUS</small></a>
+                           <!-- <a href="" class="btn bg-maroon btn-xs mb2"><i class="glyphicon glyphicon-trash"></i> <small>HAPUS</small></a> -->
                            <!-- </div> -->
                         </td>
                      </tr>

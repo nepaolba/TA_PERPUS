@@ -7,6 +7,7 @@ class Petugas extends CI_Controller
    function __construct()
    {
       parent::__construct();
+      checkLogin('admin');
       $this->load->model('Petugas_model', 'petugas');
       $this->load->helper('notif_helper');
    }

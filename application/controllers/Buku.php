@@ -8,6 +8,7 @@ class Buku extends CI_Controller
    public function __construct()
    {
       parent::__construct();
+      checkLogin('admin');
       $this->load->model('Peminjaman_model', 'peminjaman');
       $this->load->model('Category_model', 'kategori');
       $this->load->model('Buku_model', 'buku');
@@ -69,10 +70,23 @@ class Buku extends CI_Controller
 
    public function detail($kd_buku)
    {
-      $peminjam = $this->peminjaman->joinGetCodeBook($kd_buku);
-      $detailBuku = $this->buku->getBookDetails($kd_buku);
+      $queryPeminjaman = $this->db->select('anggota.kd_anggota, anggota.nama_anggota, peminjaman.jumlah_pinjam, peminjaman.tgl_kembali')
+         ->from('buku')
+         ->join('peminjaman', 'buku.kd_buku=peminjaman.kd_buku')
+         ->join('anggota', 'peminjaman.nis_nip=anggota.kd_anggota')
+         ->where('buku.kd_buku', $kd_buku)
+         ->get()->result();
+      $queryDetailBuku = $this->db->select('*')
+         ->from('buku')
+         ->join('rak', 'buku.id_rak=rak.id_rak')
+         ->join('kategori', 'kategori.kd_kategori=buku.kd_kategori')
+         ->where('buku.kd_buku', $kd_buku)
+         ->get()->row();
 
-      $data = ['breadcrumb' => "DETAIL BUKU", 'book' => $detailBuku, 'peminjam' => $peminjam, 'js' => 'buku.js'];
+
+
+      $totalPeminjaman = count($queryPeminjaman);
+      $data = ['breadcrumb' => "DETAIL BUKU", 'book' => $queryDetailBuku, 'peminjam' => $queryPeminjaman, 'total_pinjam' => $totalPeminjaman, 'js' => 'buku.js'];
       $this->viewAdmin('buku/detail', $data);
    }
 
@@ -105,6 +119,20 @@ class Buku extends CI_Controller
       } else {
          notif('Data Gagal Dihapus', 'error', 'Buku');
       }
+   }
+
+   public function cariBuku()
+   {
+      $keyword = $this->input->post('keyword');
+      $hasilCari = $this->buku->cariBuku($keyword);
+      echo json_encode($hasilCari);
+   }
+
+   public function getby_buku_id($id_buku)
+   {
+
+      $hasil = $this->buku->getOne($id_buku);
+      echo json_encode($hasil);
    }
 }
 

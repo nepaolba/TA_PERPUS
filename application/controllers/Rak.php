@@ -8,6 +8,7 @@ class Rak extends CI_Controller
    public function __construct()
    {
       parent::__construct();
+      checkLogin('admin');
       $this->load->model('Rack_model', 'rak');
       $this->load->helper('notif_helper');
    }

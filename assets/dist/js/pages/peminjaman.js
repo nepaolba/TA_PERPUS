@@ -1,4 +1,12 @@
-const url = $(document)[0].location.origin + "/perpustakaan/";
+const url = $(document)[0].location.origin +"/perpus/";
+$('#daftarAnggota').DataTable();
+
+
+$('.dataTables_filter input').css('width', '300px');
+
+
+
+
 $.fn.datepicker.dates["id"] = {
 	days: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
 	daysShort: ["Mgu", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
@@ -34,6 +42,17 @@ $.fn.datepicker.dates["id"] = {
 	today: "Hari Ini",
 	clear: "Kosongkan",
 };
+
+
+$('input[type="radio"].flat-red.pilih-pj').iCheck({
+    radioClass   : 'iradio_flat-green',
+	radioClass: "iradio_flat-green",
+}).on('ifChecked', function(event){	
+    // const selectedValue = $(this).val();
+    // $('#pj').val(selectedValue);
+	// console.log('oo');
+})
+
 const today = new Date();
 const formattedDate =
 	String(today.getDate()).padStart(2, "0") +
@@ -50,9 +69,9 @@ $("#peminjaman").DataTable({
 	autoWidth: true,
 });
 
-$('input[type="radio"].flat-red').iCheck({
-	radioClass: "iradio_flat-green",
-});
+// $('input[type="radio"].flat-red').iCheck({
+// 	radioClass: "iradio_flat-green",
+// });
 const Toast = Swal.mixin({
 	toast: true,
 	position: "top-end",
@@ -68,10 +87,11 @@ flash
 	: "";
 
 function notif(Fnotif, Fclass) {
-	Toast.fire({
-		icon: Fclass,
-		title: Fnotif,
-	});
+	Swal.fire({
+		title: Fclass,
+		text: Fnotif,
+		icon: Fclass
+	  });
 }
 
 typeForm("individu");
@@ -399,3 +419,369 @@ function detailAnggota(response) {
 		</tr>`
 	);
 }
+
+
+
+
+
+
+
+
+
+$('#frm-cari-anggota').on('submit', function(event){
+	event.preventDefault();
+	const id = $(this).serialize();
+	// console.log(url)
+	$.ajax({
+		url:url + 'Anggota/getAjaxAnggotaById',
+		type: 'POST',
+		data:id,
+		dataType:"JSON",
+		success: function(response) {	
+			const htmlAnggotaIndividu = `
+			<td>${response.kd_anggota}</td>
+			<td>${response.nama_anggota}</td>
+			<td>${response.jk == 0 ? "Laki-Laki":"Perempuan"}</td>
+			<td>${response.alamat}</td>
+			<td>
+				<div class="form-group">
+					<label>
+						<input type="checkbox" class="flat-red pilih-anggota" id="${response.kd_anggota}">
+						Pilih
+					</label>
+				</div>
+			</td>`;			
+			$('#tabel-cari-anggota-individu>tbody>tr').html(htmlAnggotaIndividu);
+			$('input[type="checkbox"].flat-red.pilih-anggota').iCheck({
+				checkboxClass: 'icheckbox_flat-green',
+				radioClass   : 'iradio_flat-green'
+			}).on('ifChecked', function(event){	
+				window.location.href = "cek_jumlah_peminjaman_individu/"+$(this).attr('id');
+			})
+		}
+	})
+})
+
+$('#frm-cari-buku-individu').on('submit', function(event){
+	event.preventDefault();
+	const keyword = $(this).serialize();
+	const keywordObject = Object.fromEntries(new URLSearchParams(keyword));
+	if (keywordObject.keyword){
+		$.ajax({
+			url:url + 'Buku/cariBuku',
+			type: 'POST',
+			data:keyword,
+			dataType:"JSON",
+			success: function(response) 
+			{
+				let htmlBukuAnggotaIndividu ="";
+				let i = 1;
+				response.forEach(element => {
+					htmlBukuAnggotaIndividu += `
+						<tr>
+						<td>
+							<div class="form-group">
+								<label>
+									<input type="checkbox" class="flat-red pilih-buku-individu" id="${element.kd_buku}" >
+									Pilih
+								</label>
+							</div>
+						</td>
+							<td>
+								<div class="buku d-flex justify-content-center">
+									<img src="${url+"assets/dist/img/buku/"+element.foto}" class="image-fluid" width="100" height="100" alt="">
+								</div>
+							</td>
+							<td>
+								<h5>${element.judul_buku}</h5>
+								<p>PENULIS : ${element.penulis}</p>
+							</td>
+							<td>${element.penerbit}</td>
+							<td>${element.kategori}</td>
+							<td>${element.nama_rak}</td>
+							<td>${element.sisa_stok}</td>
+							
+						</tr>`;
+				});
+				// console.log(htmlBukuAnggotaIndividu);
+				$("#table-cari-buku-individu>tbody").html(htmlBukuAnggotaIndividu); 
+				$('input[type="checkbox"].flat-red.pilih-buku-individu').iCheck({
+					checkboxClass: 'icheckbox_flat-green',
+					radioClass   : 'iradio_flat-green'
+				}).on('ifChecked', function(e){	
+					const path = window.location.pathname
+					const segments = path.split("/")
+					// window.location.href= url+ 'Peminjaman/submitPeminjamanIndividu/'+segments[4]+"/"+$(this).attr('id');
+					// const cek = cekPeminjamanIndividu(segments[4], $(this).attr('id'));
+					window.location.href=url+"Peminjaman/cekPeminjamanIndividu/"+segments[4]+"/"+$(this).attr('id')
+					// console.log(cek)
+					// window.location.href = 'Peminjaman/submitPeminjamanIndividu/'+segments[4]+"/"+$(this).attr('id');
+					// $('.konfirmasi-buku-individu').html(`
+					// 	<button class="btn btn-lg btn-info btn-block">Konfirmasi</button>
+					// `)
+				}).on('ifUnchecked', function(e){
+					$(".box-terpilih#"+$(this).attr('id')).remove();					
+					$(".box-buku-dipilih").children().length<=1 ? $('.konfirmasi-buku-individu').html(""):"";
+				})
+			}
+		});
+	}else{
+		console.log('silahkan masukan keyword pencarian');
+	}
+})
+
+
+$('#btn-simpan').on('click', function(){
+	// const today = new Date();
+	const path = window.location.pathname;
+	const segments = path.split("/");
+	// const onWeekLatter = new Date(today.getTime()+ (7*24*60*60*1000));
+	// const tgl_jatuh_tempo =	onWeekLatter.getFullYear()+"-" +String(onWeekLatter.getMonth() + 1).padStart(2, "0") +"-" +	String(onWeekLatter.getDate()).padStart(2, "0") +" " + onWeekLatter.getHours()+ ":"+ onWeekLatter.getMinutes()+":"+ onWeekLatter.getSeconds();
+	// const tgl_hari_ini = today.getFullYear()+"-" +String(today.getMonth() + 1).padStart(2, "0") +"-" +String(today.getDate()).padStart(2, "0") +" " + today.getHours()+ ":"+ today.getMinutes()+":"+ today.getSeconds();
+	const kd_anggota = segments[4];
+	const kd_buku = segments[5];
+	window.location.href=url+"Peminjaman/simpanPeminjamanIndividu/"+kd_anggota+"/"+ kd_buku
+	// $.ajax({
+	// 	url:url + 'Peminjaman/simpanPeminjamanIndividu/',
+	// 	type: 'POST',
+	// 	data:{kd_anggota,kd_buku,tgl_hari_ini,tgl_jatuh_tempo},
+	// 	success: function(response) {
+	// 		const a = JSON.parse(response)
+	// 		if(a =="sukses"){
+	// 			window.location.href = url+"/Peminjaman"
+	// 		}
+	// 		console.log(a)
+	// 	}
+	// })
+
+})
+
+
+// function cekPeminjamanIndividu(kd_anggota,kodeBuku){
+// 	// console.log(kd_anggota +"-"+kodeBuku)
+// 	$.ajax({
+// 		url:url + 'Peminjaman/cekPeminjamanIndividu/',
+// 		type: 'POST',
+// 		data:{kd_anggota,kodeBuku},
+// 		success: function(response) {
+// 			// const a = JSON.parse(response)
+// 			// if(a =="sukses"){
+// 			// 	window.location.href = url+"/Peminjaman"
+// 			// }
+// 			// return a
+// 			console.log(response)
+// 		}
+// 	})
+// }
+
+
+
+
+
+function ajaxBuku(kodeBuku){
+	$.ajax({
+		url:url + 'Buku/getby_buku_id/'+kodeBuku,
+		type: 'POST',
+		dataType:"JSON",
+		success: function(response) {
+			const boxTerpilih = `
+			<div class="col-lg-4 box-terpilih" id="${response.kd_buku}">
+				<div class="box box-solid new-shadow" style="border:2px solid skyblue">
+				<input type="hidden" name="kd_buku${response.kd_buku}" value="${response.kd_buku}" >
+					<div class="box-body d-flex">
+					<style>
+						img{
+							object-fit:cover
+						}
+					</style>
+						<img src="${url+"assets/dist/img/buku/"+response.foto}" width="120" height="160" alt="">
+						<b style="padding: 20px;">
+							${response.judul_buku}
+							<br><br>
+							<p>sisa stok : ${response.sisa_stok}</p>
+						</b>
+						<span class="fa fa-2x fa-times-circle-o  "></span>
+					</div>
+				</div>
+			</div>`;
+			$('.box-buku-dipilih').append(boxTerpilih)
+		}
+	})
+}
+
+
+
+
+
+
+
+
+
+
+	//     e.preventDefault();
+
+
+
+
+
+// peminjaman Individu
+// baru
+
+// $('#frm-cari-anggota').on('submit', function(e){
+//     e.preventDefault();
+//     const id = $(this).serialize();
+//     $.ajax({
+//         url: url + 'Anggota/getAjaxAnggotaById', // Sesuaikan dengan URL endpoint yang benar
+//         type: 'POST',
+//         data: id,
+// 		dataType:"JSON",
+//         success: function(response) {		
+// 				console.log(response.kd_anggota);
+// 				const html = `
+// 				<table id="example1" class="table table-bordered table-striped">
+// 				<thead>
+// 				   <tr>
+// 					  <th>NIS/NIP/ID</th>
+// 					  <th>Nama Anggota</th>
+// 					  <th>Alamat</th>
+// 					  <th>Aksi</th>
+// 				   </tr>
+// 				</thead>
+// 				<tbody>
+// 				   <tr>
+// 					  <td>${response.kd_anggota}</td>
+// 					  <td>${response.nama_anggota}</td>
+// 					  <td>${response.alamat}</td>
+// 					  <td>
+// 						 <a href="${url+'Peminjaman/cariBuku/'+response.kd_anggota}" class="btn btn-small btn-info"> <i class="fa fa-check"></i> <small>Pilih</small></a>
+// 					  </td>
+// 				   </tr>
+// 				</tbody>
+// 			 </table>`;
+// 			if(response.msg){
+// 				$('.box-pencarian').html('<div class="alert alert-danger"><p class="text-center">'+response.msg+'</p></div>');
+// 			}else{
+// 				$('.box-pencarian').html(html);
+// 			}			
+//         },
+//         error: function(xhr, status, error) {
+//             // Tangani error
+//             console.error(error);
+//         }
+//     });
+// })
+
+// $('#frm-cari-buku').submit(function(event) {
+// 	event.preventDefault();
+// 	const formData = $(this).serialize();
+// 	const formDataObj = Object.fromEntries(new URLSearchParams(formData));
+// 	// $('.box-pilih-buku').html('')
+// 	if(formDataObj.keyword){	
+// 		$.ajax({
+// 			type: 'POST',
+// 			url: $(this).attr('action'),
+// 			data: formData,
+// 			dataType:"JSON",
+// 			success: function(response) {
+// 				let htmlisi = '';
+// 				let i=1;
+// 				response.forEach(element => {
+// 					htmlisi += `
+// 					<tr>
+// 						<td class="d-flex align-items-center justify-content-center" style="height: 100px;">${i++}</td>
+// 						<td>
+// 							<div class="buku" style="display: flex;"><img src=" ${url}assets/dist/img/buku/${element.foto}" class="image-fluid" width="100" height="100" alt="foto buku"></div>
+// 						</td>
+// 						<td><strong>${element.judul_buku}</strong><p>Penulis : ${element.penulis}</p></td>
+// 						<td>${element.penerbit}</td>
+// 						<td>${element.kategori}</td>
+// 						<td>${element.nama_rak}</td>
+// 						<td>${element.sisa_stok}</td>
+// 						<td>					
+// 							<div class="form-group">					
+// 								<label>
+// 									<input type="checkbox" class="flat-red" id="idbuku-${element.kd_buku}">
+// 									PILIH
+// 								</label>					
+// 							</div>	
+// 						</td>
+// 					</tr>`
+// 				});				
+// 				const htmlbody = `
+// 				<table id="example1" class="table table-bordered table-striped">
+// 					<thead>
+// 						<tr>
+// 							<th>#</th>
+// 							<th>SAMPUL</th>
+// 							<th>JUDUL</th>
+// 							<th>PENERBIT</th>
+// 							<th>KATEGORI</th>
+// 							<th>RAK</th>
+// 							<th>SISA STOK</th>
+// 							<th>Aksi</th>
+// 						</tr>
+// 					</thead>
+// 					<tbody>
+// 						${htmlisi}
+// 					</tbody>
+// 				</table>`;
+// 				$('.box-hasil-pencarian').html(htmlbody);
+// 				$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+// 					checkboxClass: 'icheckbox_flat-green',
+// 					radioClass   : 'iradio_flat-green'
+// 				}).on('ifChecked', function(event){				
+// 					const text = $(this).attr('id');
+// 					const id = text.split("-")[1];			
+// 					fetchData(url + "Buku/getby_buku_id/"+id, "GET", bukuTerpilih); 
+// 				}).on('ifUnchecked', function(event){
+// 					// Menghapus box yang sesuai ketika checkbox atau radio button tidak lagi dipilih
+// 					$('.' + $(this).attr('id')).remove();
+// 				});
+
+// 			}
+// 		});
+// 	}
+
+// });
+// function bukuTerpilih(response){
+// 	const data = JSON.parse(response)
+// 	console.log(data);
+// 	console.log(url);
+// 	const htmlBoxBukuTerpilih = 
+// 	` <div class="col-lg-4 idbuku-${data.kd_buku}">
+// 		<div class="box box-solid">
+// 			<span class="pull-right" style="padding: 10px;cursor:pointer"><i class="fa fa-close"></i></span>
+// 			<div class="box-body">
+// 				<div class="d-flex">
+// 					<img src="${url+"assets/dist/img/buku/"+data.foto}" width="100"  alt="" style="margin-right:10px; border:2px solid grey;     height: 100px; ">
+// 					<div class="d-flex flex-direction-column">
+// 					<h5>${data.judul_buku}</h5>
+// 					<small  style="font-size:11px">PENULIS : ${data.penulis}</small>
+// 					</div>
+// 				</div>
+// 			</div>
+// 		</div>
+// 	</div>`;
+
+// 	const htmlboxpilih = `	
+// 	<div class="idbuku-${data.kd_buku}" id="${data.kd_buku}">
+// 		<div class="col-lg-4 box-terpilih">
+// 			<div class="info-box bg-white">
+// 				<span class="info-box-icon">
+// 					<img src="${url+"assets/dist/img/buku/"+data.foto}" width="100%">
+// 				</span>
+// 				<div class="info-box-content">
+// 					<span class="info-box-text"><small>${data.judul_buku}</small></span>
+// 					<span class="info-box-text"><small  style="font-size:11px">PENULIS : ${data.penulis}</small></span>
+// 					<div class="progress">
+// 						<div class="progress-bar" style="width: 0%"></div>
+// 					</div>
+// 					<span class="progress-description">Stok Tersisa : ${data.sisa_stok}</span>
+// 				</div>				
+// 			</div>				
+// 		</div>				
+// 	</div>`;
+// 	$('.box-pilih-buku').append(htmlBoxBukuTerpilih);	
+// }
+
+

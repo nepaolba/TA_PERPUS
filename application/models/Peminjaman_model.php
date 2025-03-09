@@ -14,7 +14,7 @@ class Peminjaman_model extends CI_Model
          ->join('rak', 'rak.id_rak = buku.id_rak')
          ->join('kategori', 'kategori.kd_kategori = buku.kd_kategori')
          ->join('petugas', 'petugas.kd_petugas = peminjaman.kd_petugas')
-         ->where('peminjaman.status', 0)
+         ->where('peminjaman.status !=', 1)
          ->order_by('peminjaman.id_pinjam', 'DESC')
          ->get()->result_array();
       return $query;
@@ -25,6 +25,20 @@ class Peminjaman_model extends CI_Model
       return $this->db->count_all('peminjaman');
    }
 
+   // dipake di controller peminjaman untuk cek buku yg sedang dipinjam
+   public function joinAnggotaBuku($kdanggota, $kdbuku)
+   {
+      $this->db->select('*')
+         ->from('peminjaman')
+         ->join('anggota', 'anggota.kd_anggota = peminjaman.nis_nip')
+         ->join('buku', 'buku.kd_buku = peminjaman.kd_buku')
+         ->where('peminjaman.kd_buku', $kdbuku)
+         ->where('peminjaman.nis_nip', $kdanggota)
+         ->where('status', 0)
+         ->group_by('anggota.kd_anggota, anggota.nama_anggota');
+
+      return $this->db->get()->result_array();
+   }
    public function add($data)
    {
       $this->db->insert('peminjaman', $data);
@@ -103,22 +117,24 @@ class Peminjaman_model extends CI_Model
       $query = $this->db->get();
       return $query->result_array();
    }
+
    public function getJumlahPeminjamHariIni()
    {
       $today = date('Y-m-d');
       $this->db->select('COUNT(id_pinjam) as jumlah_pinjam');
       $this->db->from('peminjaman');
-      $this->db->where('tgl_pinjam', $today);
+      $this->db->like('tgl_pinjam', $today);
       $query = $this->db->get();
       $result = $query->row();
       return $result->jumlah_pinjam;
    }
+   //baru
    public function getJumlahPeminjamJatuhTempoHariIni()
    {
       $today = date('Y-m-d'); // Ambil tanggal hari ini
       $this->db->select('COUNT(id_pinjam) as jumlah_peminjam_jatuh_tempo');
       $this->db->from('peminjaman');
-      $this->db->where('tgl_kembali', $today);
+      $this->db->like('tgl_kembali', $today);
       $query = $this->db->get();
       $result = $query->row();
       return $result->jumlah_peminjam_jatuh_tempo;

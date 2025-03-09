@@ -1,20 +1,29 @@
 <div class="row">
    <div id="flash" data-flash="<?= $this->session->flashdata('msg') ?>" data-class="<?= $this->session->flashdata('class') ?>"></div>
    <div class="col-lg-12">
+      <div class="alert alert-info alert-custom">
+         <ul>
+            <li style="list-style: none; display:flex;align-items: center; margin-left: -25px; font-size: 15px;"><i class="fa fa-info-circle" style="font-size: 25px;"></i> &nbsp;INFORMASI</li>
+            <li> Perpanjang peminjaman hanya bisa dilakukan satu kali</li>
+            <li> Masa lama perpanjang peminjaman 1 minggu / 7 hari</li>
+         </ul>
+      </div>
       <div class="box box-solid new-shadow">
          <div class="box-header">
-            <a href="<?= base_url('Peminjaman/add') ?>" class="btn btn-sm bg-aqua"><i class="fa fa-plus-circle"></i> PEMINJAMAN BARU</a>
+            <a href="<?= base_url('Peminjaman_Individu') ?>" class="btn bg-aqua"><i class="fa fa-plus-circle"></i>PENGAJUAN PEMINJAMAN BUKU</a>
+            <a href="<?= base_url('Peminjaman/kelompok') ?>" class="btn bg-primary"><i class="fa fa-plus-circle"></i> PEMINJAMAN KELAS</a>
          </div>
-         <div class="box-body">
+         <div class="box-body table-responsive">
             <table class="table" id="peminjaman">
                <thead>
                   <tr>
-                     <th>Nama Peminjam</th>
-                     <th>Judul Buku</th>
+                     <th>Anggota</th>
+                     <th>Buku</th>
                      <th>Tgl Pinjam</th>
                      <th>Tenggat</th>
-                     <th>Jumlah</th>
-                     <th>aksi</th>
+                     <th>Jumlah Pinjam</th>
+                     <th>Jenis Pinjam</th>
+                     <th>#</th>
                   </tr>
                </thead>
                <tbody>
@@ -23,19 +32,45 @@
                      <tr>
                         <td>
                            <a href="<?= base_url('Anggota/detail/' . $pinjam['nis_nip']) ?>"><?= $pinjam['nama_anggota'] ?></a>
-                           <p>
-                              <small><?= $pinjam['kelas'] != '-' ? "Peminjaman Kelas :" . $pinjam['kelas'] : 'Peminjaman Individu'  ?></small>
-                           </p>
                         </td>
                         <td>
                            <a href="<?= base_url('Buku/detail/' . $pinjam['kd_buku']) ?>"> <?= character_limiter($pinjam['judul_buku'], 70); ?></a>
-                           <p class="small">Pengarang : <?= $pinjam['penulis'] ?></p>
                         </td>
-                        <!-- <td><?= $pinjam['judul_buku'] ?></td> -->
-                        <td><?= date("d/m/Y", strtotime($pinjam['tgl_pinjam'])) ?></td>
-                        <td><?= date("d/m/Y", strtotime($pinjam['tgl_kembali'])) ?></td>
-                        <td class="text-center"><?= $pinjam['jumlah_pinjam'] ?></td>
                         <td>
+                           <?= date("d/m/Y - H:i:s", strtotime($pinjam['tgl_pinjam'])) ?>
+                        </td>
+                        <td>
+                           <?= date("d/m/Y - H:i:s", strtotime($pinjam['tgl_kembali'])) ?>
+                        </td>
+                        <td class="text-center"><?= $pinjam['jumlah_pinjam'] ?></td>
+                        <td class="text-center"><?= $pinjam['kelas'] != '' ? "Kelas :" . $pinjam['kelas'] : 'Individu'  ?></td>
+                        <td>
+                           <?php if ($pinjam['status'] == '3') : ?>
+
+                              <a href="#" class="btn btn-success btn-xs mb2"><i class="glyphicon glyphicon-check"></i> <small>Perpanjang</small></a>
+                           <?php else : ?>
+                              <?php if ($pinjam['kelas'] == ''): ?>
+                                 <a href="#modal-perpanjang<?= $pinjam['id_pinjam'] ?>" data-toggle="modal" class="btn bg-info btn-xs mb2"><i class="glyphicon glyphicon-zoom-in"></i> <small>Perpanjang</small></a>
+                              <?php endif; ?>
+                              <div class="modal fade" id="modal-perpanjang<?= $pinjam['id_pinjam'] ?>">
+                                 <div class="modal-dialog modal-sm">
+                                    <div class="modal-content" style="border-radius: 5px;">
+                                       <div class="modal-body">
+                                          <br>
+                                          <div class="" style="display: flex; flex-direction: column;align-items: center ">
+                                             <i class="fa fa-info-circle text-orange" style="font-size: 5rem;"></i>
+                                             <h4 class="modal-title text-orange"><strong>PEMBERITAHUAN</strong></h4>
+                                             <p class="text-center">Perpanjang waktu peminjaman buku <strong><?= $pinjam['judul_buku'] ?></strong> atas nama <strong><?= $pinjam['nama_anggota'] ?></strong></p>
+                                          </div>
+                                       </div>
+                                       <div class="modal-footer">
+                                          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><small>Batal</small></button>
+                                          <a href="<?= base_url('Peminjaman/perpanjang/' . $pinjam['id_pinjam'] . '/' . strtotime($pinjam['tgl_kembali'])) ?>" class="btn btn-sm btn-primary"><small>Ya ! Perpanjang</small></a>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           <?php endif; ?>
                            <a href="#modal-detail<?= $pinjam['id_pinjam'] ?>" data-toggle="modal" class="btn bg-teal btn-xs mb2"><i class="glyphicon glyphicon-zoom-in"></i> <small>DETAIL</small></a>
                            <div class="modal fade" id="modal-detail<?= $pinjam['id_pinjam'] ?>">
                               <div class="modal-dialog modal-lg">
@@ -110,7 +145,7 @@
                                           </div>
                                        </div>
                                        <div class="row" style="margin-top: 15px;">
-                                          <div class="col-md-4 col-sm-6 col-xs-12">
+                                          <div class="col-md-6 col-sm-6 col-xs-12">
                                              <div class="info-box new-shadow d-flex align-items-center">
                                                 <span class="info-box-icon bg-white"><i class="fa fa-book text-purple"></i></span>
 
@@ -120,7 +155,7 @@
                                                 </div>
                                              </div>
                                           </div>
-                                          <div class="col-md-4 col-sm-6 col-xs-12">
+                                          <!-- <div class="col-md-4 col-sm-6 col-xs-12">
                                              <div class="info-box new-shadow d-flex align-items-center">
                                                 <span class="info-box-icon bg-white"><i class="fa fa-clock-o text-teal"></i></span>
 
@@ -129,8 +164,8 @@
                                                    <span class="info-box-number">90<small>%</small></span>
                                                 </div>
                                              </div>
-                                          </div>
-                                          <div class="col-md-4 col-sm-6 col-xs-12">
+                                          </div> -->
+                                          <div class="col-md-6 col-sm-6 col-xs-12">
                                              <div class="info-box new-shadow d-flex align-items-center">
                                                 <span class="info-box-icon bg-white"><i class="fa fa-calendar-times-o text-maroon"></i></span>
 
@@ -179,7 +214,7 @@
                                  </div>
                               </div>
                            </div>
-                           <a href="#" class="btn btn-xs bg-orange mb2"><i class="glyphicon glyphicon-pencil"></i> <small>UBAH</small></a>
+                           <!-- <a href="#" class="btn btn-xs bg-orange mb2"><i class="glyphicon glyphicon-pencil"></i> <small>UBAH</small></a> -->
                            <a href="#modal-hapus<?= $pinjam['id_pinjam'] ?>" data-toggle="modal" class="btn btn-xs bg-maroon mb2"><i class="glyphicon glyphicon-trash"></i> <small>HAPUS</small></a>
                            <div class="modal fade" id="modal-hapus<?= $pinjam['id_pinjam'] ?>">
                               <div class="modal-dialog modal-sm">
@@ -202,6 +237,7 @@
                               </div>
                            </div>
                         </td>
+
                      </tr>
                   <?php endforeach; ?>
                </tbody>

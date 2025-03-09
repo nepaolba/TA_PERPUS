@@ -31,7 +31,7 @@
             <span class="info-box-icon bg-white d-flex justify-content-center align-items-center"><i class="fa fa-compress text-maroon"></i></span>
             <div class="info-box-content ml-0">
                 <span class="info-box-text">PENGEMBALIAN</span>
-                <span class="info-box-number">20 belum</span>
+                <span class="info-box-number"><?= $count_kembali; ?></span>
             </div>
         </div>
     </div>
@@ -68,49 +68,39 @@
                         <span class="fa fa-angle-right"></span>
                     </a>
                 </div> -->
+
+                <br>
+                <br>
                 <table class="table">
                     <tr>
                         <th>Nama Perpustakaan</th>
                         <th>:</th>
-                        <td>PERPUSTAKAAN SMA NEGERI 5 KUPANG</td>
+                        <td><?= $profil->nm_perpus ?></td>
                     </tr>
                     <tr>
                         <th>Status Perpus</th>
                         <th>:</th>
-                        <td>ll</td>
+                        <td><?= $profil->sts_perpus ?></td>
                     </tr>
                     <tr>
                         <th>Alamat</th>
                         <th>:</th>
-                        <td>ll</td>
+                        <td><?= $profil->alamat ?></td>
                     </tr>
                     <tr>
-                        <th>Alamat</th>
+                        <th>Email</th>
                         <th>:</th>
-                        <td>ll</td>
+                        <td><?= $profil->email ?></td>
                     </tr>
                     <tr>
-                        <th>Alamat</th>
+                        <th>No.HP</th>
                         <th>:</th>
-                        <td>ll</td>
+                        <td><?= $profil->hp ?></td>
                     </tr>
-                    <tr>
-                        <th>Alamat</th>
-                        <th>:</th>
-                        <td>ll</td>
-                    </tr>
-                    <tr>
-                        <th>Alamat</th>
-                        <th>:</th>
-                        <td>ll</td>
-                    </tr>
-                    <tr>
-                        <th>Alamat</th>
-                        <th>:</th>
-                        <td>ll</td>
-                    </tr>
-
                 </table>
+                <br>
+                <br>
+                <br>
             </div>
 
     </section>
@@ -145,7 +135,7 @@
             <span class="info-box-icon bg-orange"><i class="fa fa-folder-open-o"></i></span>
             <div class="info-box-content">
                 <span class="info-box-text">Rak Buku</span>
-                <span class="info-box-number"><?= $count_rak ?></span>
+                <span class="info-box-number"><?= number_format($count_rak, 0, '.', ','); ?></span>
                 <div class="progress bg-orange">
                     <div class="progress-bar"></div>
                 </div>
@@ -173,7 +163,7 @@
                     </div>
                     <div class="col-lg-3 text-center">
                         <h6 class="text-purple"><strong>Pengembalian</strong></h6>
-                        <h5><strong>2 belum ada</strong></h5>
+                        <h5><strong><?= $laporan_kembali ?></strong></h5>
                     </div>
                     <div class="col-lg-3 text-center">
                         <h6 class="text-maroon"><strong>Jatuh Tempo</strong></h6>

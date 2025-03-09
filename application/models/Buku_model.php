@@ -91,6 +91,19 @@ class Buku_model extends CI_Model
       $this->db->group_by($this->tabel . '.kd_buku');
       return $this->db->get()->row_array();
    }
+   //baru
+   public function cariBuku($keyword)
+   {
+      $this->db->select('*');
+      $this->db->from($this->tabel);
+      $this->db->join('kategori', 'kategori.kd_kategori =' . $this->tabel . '.kd_kategori');
+      $this->db->join('rak', 'rak.id_rak = ' . $this->tabel . '.id_rak');
+
+      $this->db->like('judul_buku', $keyword);
+      $this->db->or_like('penulis', $keyword);
+      $this->db->or_like('penerbit', $keyword);
+      return $this->db->get()->result();
+   }
 }
 
 /* End of file Book_model.php */

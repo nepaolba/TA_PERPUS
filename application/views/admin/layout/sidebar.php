@@ -33,7 +33,7 @@
                <!-- <li><a href="#"><i class="fa fa-circle-o"></i> Pengembalian</a></li> -->
             </ul>
          </li>
-         <li class="treeview">
+         <li class="treeview <?= $this->uri->segment(2) == "laporan_pengembalian" || $this->uri->segment(2) == "laporan_peminjaman" ? "active" : "" ?>">
             <a href="#">
                <i class="fa  fa-file-text"></i> <span>Laporan</span>
                <span class="pull-right-container">
@@ -41,8 +41,8 @@
                </span>
             </a>
             <ul class="treeview-menu">
-               <li><a href="#"><i class="fa fa-circle-o"></i> Peminjaman</a></li>
-               <li><a href="#"><i class="fa fa-circle-o"></i> Pengembalian</a></li>
+               <li <?= $this->uri->segment(2) == "laporan_peminjaman" ? "class='active'" : "" ?>><a href="<?= base_url('Laporan/laporan_peminjaman') ?>"><i class="fa fa-circle-o"></i> Peminjaman</a></li>
+               <li <?= $this->uri->segment(2) == "laporan_pengembalian" ? "class='active'" : "" ?>><a href="<?= base_url('Laporan/laporan_pengembalian') ?>"><i class="fa fa-circle-o"></i> Pengembalian</a></li>
             </ul>
          </li>
          <li class="header">MASTER DATA</li>
@@ -51,17 +51,10 @@
          <li <?= $this->uri->segment(1) == "Rak" ? "class='active'" : "" ?>><a href="<?= base_url('Rak') ?>"><i class="fa fa-folder-open"></i> Rak Buku</a></li>
          <li <?= $this->uri->segment(1) == "Kategori" ? "class='active'" : "" ?>><a href="<?= base_url('Kategori') ?>"><i class="fa fa-list-ul"></i> Kategori Buku</a></li>
          <li <?= $this->uri->segment(1) == "Buku" || $this->uri->segment(2) == "tambahBuku" ? "class='active'" : "" ?>><a href="<?= base_url('Buku') ?>"><i class="fa fa-book"></i> Data Buku</a></li>
-
-
-
-
-
-
-
          <!-- <li><a href="#"><i class="fa fa-money text-maroon"></i> <span>Denda</span></a></li> -->
          <li class="header">PENGATURAN</li>
-         <li><a href="#"><i class="fa fa-bank"></i> <span>Profil Perpus</span></a></li>
-         <li><a href="#"><i class="ion ion-person  "></i> <span>Akun</span></a></li>
+         <li <?= $this->uri->segment(1) == "Profil" ? "class='active'" : "" ?>><a href="<?= base_url('Profil') ?>"><i class="fa fa-bank"></i> <span>Profil Perpus</span></a></li>
+         <li <?= $this->uri->segment(1) == "Akun" ? "class='active'" : "" ?>><a href="<?= base_url('Akun') ?>"><i class="ion ion-person"></i> <span>Akun</span></a></li>
 
       </ul>
    </section>

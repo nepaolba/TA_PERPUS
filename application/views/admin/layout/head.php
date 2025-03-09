@@ -12,8 +12,9 @@
    <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/font-awesome/css/font-awesome.min.css">
    <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/Ionicons/css/ionicons.min.css">
    <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/morris.js/morris.css">
-   <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-   <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/toastr/toastr.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.1/dist/sweetalert2.min.css">
+   <!-- <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"> -->
+   <!-- <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/toastr/toastr.min.css"> -->
    <!-- <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/jvectormap/jquery-jvectormap.css"> -->
    <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
    <!-- <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap-daterangepicker/daterangepicker.css"> -->
@@ -66,7 +67,7 @@
       }
 
 
-      .swal2-popup {
+      /* .swal2-popup {
          display: flex !important;
          align-items: center;
          width: auto !important;
@@ -83,6 +84,13 @@
       }
 
       .swal2-popup.swal2-toast {
+         font-size: 1.5rem;
+      } */
+      .swal2-title {
+         font-size: 2.5rem !important;
+      }
+
+      .swal2-popup {
          font-size: 1.5rem;
       }
 
@@ -185,6 +193,10 @@
 
       .align-items-center {
          align-items: center;
+      }
+
+      .flex-direction-column {
+         flex-direction: column
       }
 
       /* #image-preview {
@@ -331,6 +343,11 @@
          margin-top: 5px;
       }
 
+      .alert-custom {
+         background-color: #00c0ef29 !important;
+         color: #262626 !important;
+      }
+
       /* Palet warna */
       /* 
       .bg-primary {
@@ -381,5 +398,24 @@
       /* .skin-blue .main-header .navbar {
          background: url('assets/dist/img/header.png');top 
       } */
+      .dataTables_filter {
+         display: flex;
+         align-items: center;
+         /* Untuk memusatkan vertikal */
+      }
+
+      .dataTables_filter input {
+         flex: 1;
+         /* Membuat input fleksibel agar mengisi ruang yang tersedia */
+         min-width: 150px;
+         /* Setel lebar minimum jika diperlukan */
+         max-width: 100%;
+         /* Menghindari input melebihi lebar kontainer */
+      }
+
+      .dataTables_filter .form-control {
+         width: 100%;
+         /* Input menyesuaikan dengan lebar kontainer */
+      }
    </style>
 </head>

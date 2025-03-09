@@ -8,6 +8,7 @@ class Kategori extends CI_Controller
    public function __construct()
    {
       parent::__construct();
+      checkLogin('admin');
       $this->load->model('Category_model', 'category');
       $this->load->helper('notif_helper');
    }

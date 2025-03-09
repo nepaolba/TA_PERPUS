@@ -9,13 +9,12 @@ class Pengembalian_model extends CI_Model
    {
       $query = $this->db->select('*')
          ->from('pengembalian')
-         ->join('buku', 'buku.kd_buku = pengembalian.kd_buku')
+         ->join('peminjaman', 'peminjaman.id_pinjam = pengembalian.id_pinjam')
+         ->join('buku', 'buku.kd_buku = peminjaman.kd_buku')
          ->join('rak', 'rak.id_rak = buku.id_rak')
          ->join('kategori', 'kategori.kd_kategori = buku.kd_kategori')
          ->join('petugas', 'petugas.kd_petugas = pengembalian.kd_petugas')
-         ->join('anggota', 'anggota.kd_anggota = pengembalian.kd_anggota')
-         ->join('peminjaman', 'peminjaman.id_pinjam = pengembalian.id_pinjam')
-         // ->group_by('pengembalian.id_kembali')
+         ->join('anggota', 'anggota.kd_anggota = peminjaman.nis_nip')
          ->get()->result_array();
       return $query;
    }
@@ -54,6 +53,21 @@ class Pengembalian_model extends CI_Model
    {
       $this->db->insert('pengembalian', $data);
       return $this->db->affected_rows() > 0 ? true : false;
+   }
+   public function countKembali()
+   {
+      return $this->db->count_all('pengembalian    ');
+   }
+
+   public function getJumlahPengembalianHariIni()
+   {
+      $today = date('Y-m-d');
+      $this->db->select('COUNT(id_kembali) as jumlah_kembali');
+      $this->db->from('pengembalian');
+      $this->db->like('tgl', $today);
+      $query = $this->db->get();
+      $result = $query->row();
+      return $result->jumlah_kembali;
    }
    public function update($tabel = "pengembalian", $data, $id, $where)
    {

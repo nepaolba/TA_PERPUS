@@ -90,6 +90,17 @@ class Anggota extends CI_Controller
         $anggota = $this->anggota->getById($kdAnggota);
         echo json_encode($anggota);
     }
+    // baru dibuat
+    public function getAjaxAnggotaById()
+    {
+        // var_dump($this->input->post('kd_anggota'));
+        $anggota = $this->anggota->getById($this->input->post('kd_anggota'));
+        if ($anggota) {
+            echo json_encode($anggota);
+        } else {
+            echo json_encode(['msg' => 'Data tidak ditemukan']);
+        };
+    }
 
     public function delete($kdAnggota)
     {

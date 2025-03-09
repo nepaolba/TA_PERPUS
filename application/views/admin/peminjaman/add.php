@@ -1,3 +1,39 @@
+<!-- <div class="row">
+
+   <div class="col-lg-12">
+      <div class="box box-solid new-shadow">
+         <div class="box-header">
+            <h3>CARI ANGGOTA</h3>
+         </div>
+         <form id="frm-cari-anggota">
+            <div class="box-body">
+               <div class="form-group">
+                  <input type="text" class="form-control" name="kd_anggota" placeholder="Cari berdasarkan NIS/NIP/ID">
+               </div>
+            </div>
+            <div class="box-footer">
+               <button class="btn btn-primary btn-sm btn-cari-anggota">CARI ANGGOTA</button>
+            </div>
+         </form>
+      </div>
+   </div>
+
+   <div class="col-lg-12">
+      <div class="box box-solid new-shadow">
+         <div class="box-header">
+            <h3>HASIL PENCARIAN ANGGOTA</h3>
+         </div>
+         <div class="box-body box-pencarian"></div>
+      </div>
+   </div>
+
+</div> -->
+
+
+
+
+
+
 <div class="row">
    <div class="col-lg-12">
       <div class="box box-solid new-shadow">

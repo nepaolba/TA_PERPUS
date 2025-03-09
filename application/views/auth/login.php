@@ -57,12 +57,12 @@
       <!-- <p class="login-box-msg">Sign in to start your session</p> -->
       <form action="<?= base_url('Auth') ?>" method="post">
         <div class="form-group has-feedback">
-          <input type="text" class="form-control" id="username" name="username" value="<?= set_value('username') ?>" placeholder="Username">
+          <input type="text" class="form-control" id="username" name="username" value="" placeholder="Username">
           <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           <?= form_error('username', '<small class="text-danger"><i class="fa fa-info-circle"></i> ', '</small>') ?>
         </div>
         <div class="form-group has-feedback">
-          <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+          <input type="password" class="form-control" id="password" name="password" value="" placeholder="Password">
           <span class="glyphicon glyphicon-eye-open form-control-feedback " id="eye-icon"></span>
           <?= form_error('password', '<small class="text-danger"><i class="fa fa-info-circle"></i> ', '</small>') ?>
         </div>
@@ -73,8 +73,8 @@
         </div>
       </form>
       <br>
-      <a href="#">Lupa Password</a><br>
-      <a href="register.html" class="text-center">Buat Akun Baru</a><br><br>
+      <a href="<?= base_url() ?>" class="text-center">Kembali Ke Beranda</a><br>
+      <!-- <a href="register.html" class="text-center">Buat Akun Baru</a><br><br> -->
     </div>
   </div>
   <script src="<?= base_url('assets/') ?>bower_components/jquery/dist/jquery.min.js"></script>
