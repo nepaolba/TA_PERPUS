@@ -26,7 +26,7 @@
                         curr_hour = checkTime(curr_hour);
                         curr_minute = checkTime(curr_minute);
                         curr_second = checkTime(curr_second);
-                        document.getElementById('jam').value = curr_hour + ":" + curr_minute + ":" + curr_second + " " + a_p;
+                        document.getElementById('jam').value = curr_hour + ":" + curr_minute + ":" + curr_second;
                     }
 
                     function checkTime(i) {

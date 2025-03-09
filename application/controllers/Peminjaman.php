@@ -185,6 +185,8 @@ class Peminjaman extends CI_Controller
         ];
         $this->viewAdmin('Peminjaman/submitPeminjamanKelompok', $data);
     }
+
+
     public function simpanPeminjamanKelompok($kd_anggota, $kd_buku, $kelas)
     {
         $post = $this->input->post();

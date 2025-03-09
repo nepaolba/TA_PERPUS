@@ -215,7 +215,7 @@
                               </div>
                            </div>
                            <!-- <a href="#" class="btn btn-xs bg-orange mb2"><i class="glyphicon glyphicon-pencil"></i> <small>UBAH</small></a> -->
-                           <a href="#modal-hapus<?= $pinjam['id_pinjam'] ?>" data-toggle="modal" class="btn btn-xs bg-maroon mb2"><i class="glyphicon glyphicon-trash"></i> <small>HAPUS</small></a>
+                           <!-- <a href="#modal-hapus<?= $pinjam['id_pinjam'] ?>" data-toggle="modal" class="btn btn-xs bg-maroon mb2"><i class="glyphicon glyphicon-trash"></i> <small>HAPUS</small></a> -->
                            <div class="modal fade" id="modal-hapus<?= $pinjam['id_pinjam'] ?>">
                               <div class="modal-dialog modal-sm">
                                  <div class="modal-content" style="border-radius: 5px;">
