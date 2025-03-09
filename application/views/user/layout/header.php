@@ -124,6 +124,9 @@
                         <li class="nav-item <?= $this->uri->segment(2) == 'kartuAnggota'  ? ' active' : '' ?>">
                             <a href="<?= base_url('Welcome/kartuAnggota') ?>" class="nav-link"><i class="far fa-heart"></i><span>Kartu Anggota</span></a>
                         </li>
+                        <li class="nav-item <?= $this->uri->segment(2) == 'kartuAnggota'  ? ' active' : '' ?>">
+                            <a href="<?= base_url('Welcome/kartuAnggota') ?>" class="nav-link"><i class="far fa-heart"></i><span>Daftar Peminjaman</span></a>
+                        </li>
                     </ul>
                 </div>
             </nav>
