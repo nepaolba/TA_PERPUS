@@ -4,7 +4,6 @@
         <div class="alert alert-info alert-custom">
             <ul>
                 <li style="list-style: none; display:flex;align-items: center; margin-left: -25px;font-size: 15px;"><i class="fa fa-info-circle" style="font-size: 25px;"></i> &nbsp;INFORMASI</li>
-                <!-- <li> 1 anggota hanya dapat meminjam 1 buku yang sama</li> -->
                 <li> 1 anggota hanya dapat meminjam 3 buku yang berbeda </li>
                 <li> Jika peminjaman sudah mencapai maksimal peminjaman maka peminjaman tidak dapat dilakukan </li>
             </ul>
@@ -13,8 +12,6 @@
     <div class="col-lg-6">
         <div class="box box-solid">
             <div class="box-header">Peminjaman</div>
-
-
             <form action="<?= base_url('Peminjaman_individu/pinjam_buku') ?>" method="post">
                 <div class="box-body">
                     <div class="form-group">
@@ -54,9 +51,23 @@
                     <button type="submit" class="btn btn-primary">Ajukan Peminjaman</button>
                 </div>
             </form>
-
-
-
         </div>
     </div>
-</div>
+    <div class="col-lg-6">
+        <div class="box box-solid">
+            <div class="box-header">
+                <h3>Informasi Peminjam</h3>
+            </div>
+            <div class="box-body">
+                ll
+            </div>
+        </div>
+        <div class="box box-solid">
+            <div class="box-header">
+                <h3>Informasi Pustaka</h3>
+            </div>
+            <div class="box-body">
+                ll
+            </div>
+        </div>
+    </div>

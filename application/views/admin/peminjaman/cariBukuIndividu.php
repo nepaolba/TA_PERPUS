@@ -25,19 +25,6 @@
         </div>
         <div class="box box-solid">
             <div class="box-body">
-                <!-- <div class="col-lg-6">
-                    <div class="box-header">
-                        <h3 class="box-title">PILIH BUKU</h3>
-                    </div>
-                    <div id="flash" data-flash="<?= $this->session->flashdata('msg') ?>" data-class="<?= $this->session->flashdata('class') ?>"></div>
-                    <form id="frm-cari-buku-individu">
-                        <div class="form-group">
-                            <label for="">Cari Judul, pengarang atau penerbit buku</label>
-                            <input type="text" name="keyword" class="form-control input-lg" placeholder="Cari Judul, pengarang atau penerbit buku">
-                        </div>
-                        <button type="submit" class="btn btn-lg btn-block btn-info">Cari</button>
-                    </form>
-                </div> -->
                 <div class="col-lg-12">
                     <div class="box-header data-kdanggota" data-kdanggota="<?= $dataAnggota['kd_anggota'] ?>">
                         <h3 class="box-title">DATA ANGGOTA</h3>

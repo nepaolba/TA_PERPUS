@@ -82,6 +82,12 @@
                   <input type="text" name="jumlah_buku" id="jumlah_buku" value="<?= set_value('jumlah_buku', $bookData['jumlah_buku']) ?>" class="form-control" placeholder="Masukan Jumlah Buku">
                   <?= form_error('jumlah_buku', '<small class="text-danger"><i class="fa fa-times-circle"></i> ', '</small>') ?>
                </div>
+               <div class="form-group">
+                  <label for="sinopsis">Sinopsis</label>
+                  <textarea name="sinopsis" id="sinopsis" class="form-control" style="height: 200px;">
+                  <?= set_value('sinopsis', $bookData['sinopsis']) ?>
+                  </textarea>
+               </div>
             </div>
             <div class="box-footer">
                <a href="<?= base_url('Buku') ?>" class="btn btn-default"> <i class="fa fa-angle-double-left"></i> Kembali</a>

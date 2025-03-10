@@ -8,11 +8,13 @@
             <li> Masa lama perpanjang peminjaman 1 minggu / 7 hari</li>
          </ul>
       </div>
+
+      <div class="box-header" style="padding-left: 0 !important;">
+         <a href="<?= base_url('Peminjaman_Individu') ?>" class="btn btn-default"><i class="fa fa-upload"></i> Tambah Peminjaman Baru</a>
+         <a href="<?= base_url('Peminjaman/kelompok') ?>" class="btn btn-default"><i class="fa fa-upload"></i> Tambah Peminjaman Kelas</a>
+      </div>
+
       <div class="box box-solid new-shadow">
-         <div class="box-header">
-            <a href="<?= base_url('Peminjaman_Individu') ?>" class="btn bg-aqua"><i class="fa fa-plus-circle"></i>PENGAJUAN PEMINJAMAN BUKU</a>
-            <a href="<?= base_url('Peminjaman/kelompok') ?>" class="btn bg-primary"><i class="fa fa-plus-circle"></i> PEMINJAMAN KELAS</a>
-         </div>
          <div class="box-body table-responsive">
             <table class="table" id="peminjaman">
                <thead>

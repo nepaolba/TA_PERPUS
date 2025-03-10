@@ -70,8 +70,9 @@
                <tr>
                   <td>Sinopsis</td>
                   <th width="30"> : </th>
-                  <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est ipsum magnam molestias et. Saepe atque veniam esse, accusamus ipsa, doloremque suscipit, ullam iusto non maxime temporibus asperiores perferendis labore libero.
-                     Quia sit culpa iste cumque ullam laboriosam magnam amet repudiandae, praesentium sequi nulla tenetur cum? Odio error nobis, excepturi magni iste itaque numquam laborum quis sint quaerat omnis est voluptatem?0</td>
+                  <td>
+                     <?= $book->sinopsis ?>
+                  </td>
                </tr>
             </table>
          </div>

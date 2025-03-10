@@ -77,6 +77,10 @@
                   <label for="jumlah_buku">Jumlah Buku</label>
                   <input type="text" name="jumlah_buku" id="jumlah_buku" class="form-control" placeholder="Masukan Jumlah Buku">
                </div>
+               <div class="form-group">
+                  <label for="jumlah_buku">Sinopsis</label>
+                  <textarea name="sinopsis" id="sinopsis" class="form-control" style="height: 200px;"></textarea>
+               </div>
             </div>
             <div class="box-footer">
                <a href="<?= base_url('Buku') ?>" class="btn btn-sm btn-default"> <i class="fa fa-angle-double-left"></i> Kembali</a>
