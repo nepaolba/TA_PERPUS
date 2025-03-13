@@ -24,20 +24,37 @@ class Pengembalian extends CI_Controller
       $this->viewAdmin('pengembalian/index', $data);
    }
 
+  public function jenisPengembalian(){
+      $pengembalian = $this->kembali->getAll();
+      $data = ['breadcrumb' => "JENIS PENGEMBALIAN",  'jenis'=>"Pengembalian", 'pengembalian' => $pengembalian, 'js' => 'indexpengembalian.js'];
+      $this->viewAdmin('jenis', $data);
+  }
+
    public function individu()
    {
-      $dataPeminjam = $this->db->select('*')
+        $post="";
+        if($id = $this->uri->segment(2) == "individu"){
+         $post = 0;
+        }
+        if($id = $this->uri->segment(2) == "Kelompok"){
+         $post = 1;
+        }
+     
+         $dataPeminjam = $this->db->select('*')
          ->from('peminjaman')
          ->join('anggota', 'anggota.kd_anggota=peminjaman.nis_nip')
          ->join('buku', 'buku.kd_buku=peminjaman.kd_buku')
          ->where('status !=', 1)
-         ->where('jenis_pinjam', 0)
+         ->where('jenis_pinjam', $post)
          ->group_by('anggota.kd_anggota')
          ->get()
          ->result();
+     
+     
       $data = [
-         'breadcrumb' => "PENGEMBALIAN INDIVIDU",
+         'breadcrumb' => "PENGEMBALIAN",
          'peminjaman' => $dataPeminjam,
+         'jenisPinjam'=>  $post,
          'js' => 'pengembalian_individu.js'
       ];
       $this->viewAdmin('pengembalian/pengembalian_individu', $data);
@@ -46,15 +63,15 @@ class Pengembalian extends CI_Controller
 
    public function daftarBuku()
    {
-
       $kdAnggota = $this->input->post('kd_anggota');
+      $JPinjam = $this->input->post('jenisPinjam');
       $dataBuku = $this->db->select('*')
          ->from('peminjaman')
          ->join('buku', 'buku.kd_buku=peminjaman.kd_buku', 'left')
          ->join('rak', 'buku.id_rak=rak.id_rak', 'left')
          ->join('kategori', 'buku.kd_kategori=kategori.kd_kategori', 'left')
          ->where('peminjaman.status !=', 1)
-         ->where('jenis_pinjam', 0)
+         ->where('jenis_pinjam',  $JPinjam)
          ->where('nis_nip', $kdAnggota)
          ->get()->result();
       $dataAnggota = $this->db->select('kd_anggota,alamat,jk,nama_anggota,nohp,status_anggota,tgl_daftar_anggota')
@@ -81,9 +98,6 @@ class Pengembalian extends CI_Controller
          "denda" => "0",
          "id_pinjam" => $idPinjam,
       ];
-      // var_dump($data);
-
-
       $insert = $this->kembali->add($data);
 
       if ($insert) {

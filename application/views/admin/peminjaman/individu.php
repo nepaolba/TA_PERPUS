@@ -9,13 +9,14 @@
             </ul>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="box box-solid">
             <div class="box-header">Peminjaman</div>
             <form action="<?= base_url('Peminjaman_individu/pinjam_buku') ?>" method="post">
                 <div class="box-body">
                     <div class="form-group">
                         <label for="pilih-anggota">Pilih Anggota</label>
+                        <!-- <input type="text" value="<?= ?>"> -->
                         <select name="pilih-anggota" id="pilih-anggota" class="form-control select2">
                             <option value="">PILIH ANGGOTA</option>
                             <?php foreach ($dataAnggota as $anggota): ?>
@@ -53,21 +54,4 @@
             </form>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="box box-solid">
-            <div class="box-header">
-                <h3>Informasi Peminjam</h3>
-            </div>
-            <div class="box-body">
-                ll
-            </div>
-        </div>
-        <div class="box box-solid">
-            <div class="box-header">
-                <h3>Informasi Pustaka</h3>
-            </div>
-            <div class="box-body">
-                ll
-            </div>
-        </div>
-    </div>
+  

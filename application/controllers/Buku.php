@@ -134,6 +134,13 @@ class Buku extends CI_Controller
       $hasil = $this->buku->getOne($id_buku);
       echo json_encode($hasil);
    }
+
+   public function get_buku_by_kategori()
+   {
+      $kategori_id = $this->input->post('kategori_id');
+      $dataBuku = $this->db->get_where('buku', ['kd_kategori' => $kategori_id])->result(); // Ambil data buku berdasarkan kategori dari model
+      echo json_encode(['dataBuku' => $dataBuku]);
+   }
 }
 
 /* End of file Buku.php */

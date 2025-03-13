@@ -1,6 +1,6 @@
 <div class="content-wrapper">
    <section class="content-header">
-      <h1 class="text-navy">
+      <h1 class="text-navy" style="font-weight: 500;">
          <?= $breadcrumb; ?>
          <small>PERPUSTAKAAN SMAN 5 KUPANG</small>
       </h1>

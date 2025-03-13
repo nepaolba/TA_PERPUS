@@ -4,6 +4,7 @@
             <div class="box-body">
                 <form action="<?= base_url('Pengembalian/daftarBuku') ?>" method="post">
                     <div class="col-lg-10">
+                        <input type="hidden" name="jenisPinjam" value="<?= $jenisPinjam ?>">
                         <div class="form-group">
                             <select name="kd_anggota" class="form-control input-lg select2">
                                 <option value="">Pilih Anggota</option>

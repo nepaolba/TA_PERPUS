@@ -20,7 +20,7 @@ class Peminjaman_Individu extends CI_Controller
     public function index()
     {
         $anggota = $this->db->select('kd_anggota, nama_anggota')
-            ->where('status_anggota', '1')
+            // ->where('status_anggota', '1')
             ->order_by('nama_anggota', 'ASC')
             ->get('anggota')
             ->result();

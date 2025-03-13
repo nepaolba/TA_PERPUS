@@ -1,11 +1,12 @@
 <div class="row">
    <div id="flash" data-flash="<?= $this->session->flashdata('msg') ?>" data-class="<?= $this->session->flashdata('class') ?>"></div>
    <div class="col-lg-12">
-      <div class="box box-solid new-shadow">
-         <div class="box-header">
-            <a href="<?= base_url('Pengembalian/individu') ?>" class="btn btn-sm bg-purple"><i class="fa fa-plus-circle"></i> PENGEMBALIAN INDIVIDU</a>
-            <a href="<?= base_url('Pengembalian/pengajuan') ?>" class="btn btn-sm bg-purple"><i class="fa fa-plus-circle"></i> PENGEMBALIAN KELAS</a>
+   <div class="box-header">
+            <a href="<?= base_url('Pengembalian/jenisPengembalian') ?>" class="btn btn-default"><i class="fa fa-download"></i> PENGEMBALIAN BUKU</a>
+            <!-- <a href="<?= base_url('Pengembalian/pengajuan') ?>" class="btn btn-sm bg-purple"><i class="fa fa-plus-circle"></i> PENGEMBALIAN KELAS</a> -->
          </div>
+      <div class="box box-solid new-shadow">
+        
          <div class="box-body">
             <table class="table" id="example1">
                <thead>

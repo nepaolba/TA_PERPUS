@@ -10,7 +10,7 @@
       </div>
 
       <div class="box-header" style="padding-left: 0 !important;">
-         <a href="<?= base_url('Peminjaman/jenisPinjam') ?>" class="btn btn-default"><i class="fa fa-upload"></i> Tambah Peminjaman Baru</a>
+         <a href="<?= base_url('Pinjam/tambahPeminjaman') ?>" class="btn btn-default"><i class="fa fa-upload"></i> Tambah Peminjaman Baru</a>
          <!-- <a href="<?= base_url('Peminjaman/kelompok') ?>" class="btn btn-default"><i class="fa fa-upload"></i> Tambah Peminjaman Kelas</a> -->
       </div>
 

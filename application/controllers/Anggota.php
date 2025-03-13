@@ -101,6 +101,18 @@ class Anggota extends CI_Controller
             echo json_encode(['msg' => 'Data tidak ditemukan']);
         };
     }
+    public function get_status_anggota()
+    {
+        // var_dump($this->input->post('kd_anggota'));
+        $anggota = $this->anggota->getById($this->input->post('kd_anggota'));
+        if ($anggota) {
+            echo json_encode($anggota);
+        } else {
+            echo json_encode(['msg' => 'Data tidak ditemukan']);
+        };
+    }
+
+
 
     public function delete($kdAnggota)
     {

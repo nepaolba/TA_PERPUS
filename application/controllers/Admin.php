@@ -41,4 +41,30 @@ class Admin extends CI_Controller
         //var_dump($this->pinjam->getJumlahPeminjamHariIni());
         $this->viewAdmin('index', $data);
     }
+    public function validasiJenisPinjam()
+    {
+        $JPinjam = $this->input->post('jenisPinjam');
+        $type = $this->input->post('jns');
+
+        if($type == 'Peminjaman'){
+            if($JPinjam == '0'){
+                redirect('Peminjaman/individu');
+            }
+            if($JPinjam == '1'){
+                redirect('Peminjaman/kelompok');
+            }
+        }
+
+        if($type == 'Pengembalian'){
+            if($JPinjam == '0'){
+                redirect('Pengembalian/individu');
+            }
+            if($JPinjam == '1'){
+                redirect('Pengembalian/kelompok');
+            }
+        }
+
+    }
+
+
 }
