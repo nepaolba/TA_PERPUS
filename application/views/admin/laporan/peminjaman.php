@@ -32,8 +32,6 @@
                                 </td>
                                 <td class="text-center"><?= $pinjam['jumlah_pinjam'] ?></td>
                                 <td class="text-center"><?= $pinjam['kelas'] != '' ? "Kelas :" . $pinjam['kelas'] : 'Individu'  ?></td>
-
-
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

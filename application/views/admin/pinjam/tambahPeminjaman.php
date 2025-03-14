@@ -91,7 +91,7 @@
                     <div id="jumlahPinjam"></div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Kembali</button>
+                            <a href="<?= base_url('Pinjam') ?>" class="btn btn-default">Kembali</a>
                             <button type="submit" class="btn btn-danger">Submit</button>
                         </div>
                     </div>
@@ -130,7 +130,8 @@
                             <select name="pilih-anggota-kelas" id="pilih-anggota-kelas" class="form-control select2" style="width: 100%;">
                                 <option value="">PILIH ANGGOTA</option>
                                 <?php foreach ($dataAnggota as $anggotak): ?>
-                                    <?php if ($anggotak->status_anggota == 1): ?>
+                                    <?php var_dump($anggotak);
+                                    if ($anggotak->status_anggota == 1): ?>
                                         <option value="<?= $anggotak->kd_anggota ?>"><?= $anggotak->nama_anggota ?></option>
                                     <?php endif; ?>
                                 <?php endforeach; ?>

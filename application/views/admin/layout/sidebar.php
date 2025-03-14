@@ -17,7 +17,7 @@
                <span>Dashboard</span>
             </a>
          </li>
-         <li class="treeview <?= $this->uri->segment(1) == "Peminjaman" || $this->uri->segment(1) == "Pengembalian" ? "active" : "" ?>">
+         <li class="treeview <?= $this->uri->segment(1) == "Pinjam" || $this->uri->segment(1) == "Pengembalian" ? "active" : "" ?>">
             <a href="#">
                <i class="fa fa-compress"></i> <span>Transaksi</span>
                <span class="pull-right-container">
@@ -25,8 +25,7 @@
                </span>
             </a>
             <ul class="treeview-menu">
-               <li <?= $this->uri->segment(1) == "Peminjaman" ? "class='active'" : "" ?>><a href="<?= base_url('Peminjaman') ?>"><i class="fa fa-circle-o"></i> Peminjaman</a></li>
-               <li <?= $this->uri->segment(1) == "Pinjam" ? "class='active'" : "" ?>><a href="<?= base_url('Pinjam') ?>"><i class="fa fa-circle-o"></i> Pinjam</a></li>
+               <li <?= $this->uri->segment(1) == "Pinjam" ? "class='active'" : "" ?>><a href="<?= base_url('Pinjam') ?>"><i class="fa fa-circle-o"></i> Peminjaman</a></li>
                <li <?= $this->uri->segment(1) == "Pengembalian" ? "class='active'" : "" ?>><a href="<?= base_url('Pengembalian') ?>"><i class="fa fa-circle-o"></i> Pengembalian</a></li>
             </ul>
          </li>
@@ -50,6 +49,7 @@
          <li <?= $this->uri->segment(1) == "Buku" || $this->uri->segment(2) == "tambahBuku" ? "class='active'" : "" ?>><a href="<?= base_url('Buku') ?>"><i class="fa fa-book"></i> Data Buku</a></li>
          <li class="header">PENGATURAN</li>
          <li <?= $this->uri->segment(1) == "Profil" ? "class='active'" : "" ?>><a href="<?= base_url('Profil') ?>"><i class="fa fa-bank"></i> <span>Profil Perpus</span></a></li>
+         <li <?= $this->uri->segment(1) == "Akun" ? "class='active'" : "" ?>><a href="<?= base_url('Akun') ?>"><i class="fa fa-bank"></i> <span>Akun</span></a></li>
       </ul>
    </section>
 </aside>

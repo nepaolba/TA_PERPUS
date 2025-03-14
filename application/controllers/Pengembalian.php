@@ -24,37 +24,38 @@ class Pengembalian extends CI_Controller
       $this->viewAdmin('pengembalian/index', $data);
    }
 
-  public function jenisPengembalian(){
-      $pengembalian = $this->kembali->getAll();
-      $data = ['breadcrumb' => "JENIS PENGEMBALIAN",  'jenis'=>"Pengembalian", 'pengembalian' => $pengembalian, 'js' => 'indexpengembalian.js'];
-      $this->viewAdmin('jenis', $data);
-  }
+   // public function jenisPengembalian()
+   // {
+   //    $pengembalian = $this->kembali->getAll();
+   //    $data = ['breadcrumb' => "JENIS PENGEMBALIAN",  'jenis' => "Pengembalian", 'pengembalian' => $pengembalian, 'js' => 'indexpengembalian.js'];
+   //    $this->viewAdmin('jenis', $data);
+   // }
 
-   public function individu()
+   public function pengembalian()
    {
-        $post="";
-        if($id = $this->uri->segment(2) == "individu"){
-         $post = 0;
-        }
-        if($id = $this->uri->segment(2) == "Kelompok"){
-         $post = 1;
-        }
-     
-         $dataPeminjam = $this->db->select('*')
+      $dataPeminjamIndividu = $this->db->select('*')
          ->from('peminjaman')
          ->join('anggota', 'anggota.kd_anggota=peminjaman.nis_nip')
          ->join('buku', 'buku.kd_buku=peminjaman.kd_buku')
-         ->where('status !=', 1)
-         ->where('jenis_pinjam', $post)
+         ->where('peminjaman.status !=', 1)
+         ->where('peminjaman.jenis_pinjam', 0)
          ->group_by('anggota.kd_anggota')
          ->get()
          ->result();
-     
-     
+      $dataPeminjamKelompok = $this->db->select('*')
+         ->from('peminjaman')
+         ->join('anggota', 'anggota.kd_anggota=peminjaman.nis_nip')
+         ->join('buku', 'buku.kd_buku=peminjaman.kd_buku')
+         ->where('peminjaman.status !=', 1)
+         ->where('anggota.status_anggota !=', 0)
+         ->where('peminjaman.jenis_pinjam', 1)
+         ->group_by('anggota.kd_anggota')
+         ->get()
+         ->result();
       $data = [
          'breadcrumb' => "PENGEMBALIAN",
-         'peminjaman' => $dataPeminjam,
-         'jenisPinjam'=>  $post,
+         'peminjamanIndividu' => $dataPeminjamIndividu,
+         'peminjamanKelompok' => $dataPeminjamKelompok,
          'js' => 'pengembalian_individu.js'
       ];
       $this->viewAdmin('pengembalian/pengembalian_individu', $data);
@@ -79,16 +80,13 @@ class Pengembalian extends CI_Controller
          ->where('kd_anggota', $kdAnggota)
          ->get()->row();
       $data = [
-         'breadcrumb' => "PENGEMBALIAN INDIVIDU",
+         'breadcrumb' => "PENGEMBALIAN",
          'dataBuku' => $dataBuku,
          'dataAnggota' => $dataAnggota,
          'js' => 'pengembalian_individu.js'
       ];
       $this->viewAdmin('pengembalian/daftarBukuIndividu', $data);
    }
-
-
-
    public function submitPengembalian($idPinjam, $kd_buku)
    {
       $data = [

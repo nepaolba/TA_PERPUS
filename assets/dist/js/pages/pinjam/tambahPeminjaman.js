@@ -1,8 +1,6 @@
 const url = $(document)[0].location.origin +"/perpus/";
 $(".select2").select2();
-
-$(document).ready(function() {
-    
+$(document).ready(function() {    
     const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -24,22 +22,17 @@ $(document).ready(function() {
             icon: Fclass
           });
     }
-
-
     $('#kategori-buku').on('change', function() {
-        const kategoriId = $(this).val();        
-        // Cek apakah kategori telah dipilih
+        const kategoriId = $(this).val();  
         if(kategoriId) {
             $.ajax({
-                url: url+'Buku/get_buku_by_kategori', // Ganti dengan URL endpoint di server untuk mengambil buku
+                url: url+'Buku/get_buku_by_kategori',
                 method: 'POST',
                 data: { kategori_id: kategoriId },
                 dataType: 'json',
                 success: function(response) {
-                    $('#judul-buku').empty();                    
-                    // Tambahkan opsi default
-                    $('#judul-buku').append('<option value="">PILIH JUDUL BUKU</option>');                    
-                    // Iterasi hasil response dan tambahkan ke dropdown buku
+                    $('#judul-buku').empty();       
+                    $('#judul-buku').append('<option value="">PILIH JUDUL BUKU</option>'); 
                     $.each(response.dataBuku, function(index, buku) {
                         $('#judul-buku').append('<option value="' + buku.kd_buku+ '">' + buku.judul_buku + '</option>');
                         console.log(buku)
@@ -50,31 +43,25 @@ $(document).ready(function() {
                 }
             });
         } else {
-            // Jika kategori tidak dipilih, kosongkan daftar buku
             $('#judul-buku').empty();
             $('#judul-buku').append('<option value="">PILIH JUDUL BUKU</option>');
         }
     });
-
-
-
     $('#kategori-buku-kelas').on('change', function() {
-        const kategoriId = $(this).val();        
-        // Cek apakah kategori telah dipilih
+        const kategoriId = $(this).val();   
         if(kategoriId) {
             $.ajax({
-                url: url+'Buku/get_buku_by_kategori', // Ganti dengan URL endpoint di server untuk mengambil buku
+                url: url+'Buku/get_buku_by_kategori',
                 method: 'POST',
                 data: { kategori_id: kategoriId },
                 dataType: 'json',
                 success: function(response) {
-                    $('#judul-buku-kelas').empty();                    
-                    // Tambahkan opsi default
-                    $('#judul-buku-kelas').append('<option value="">PILIH JUDUL BUKU</option>');                    
-                    // Iterasi hasil response dan tambahkan ke dropdown buku
+                    $('#judul-buku-kelas').empty();
+                    $('#judul-buku-kelas').append('<option value="">PILIH JUDUL BUKU</option>');  
                     $.each(response.dataBuku, function(index, buku) {
-                        $('#judul-buku-kelas').append('<option value="' + buku.kd_buku+ '">' + buku.judul_buku + '</option>');
-                        console.log(buku)
+                        if(buku.jumlah_buku > 0){
+                            $('#judul-buku-kelas').append('<option value="' + buku.kd_buku+ '">' + buku.judul_buku + '</option>');                            
+                        }                  
                     });
                 },
                 error: function() {
@@ -82,22 +69,15 @@ $(document).ready(function() {
                 }
             });
         } else {
-            // Jika kategori tidak dipilih, kosongkan daftar buku
             $('#judul-buku-kelas').empty();
             $('#judul-buku-kelas').append('<option value="">PILIH JUDUL BUKU</option>');
         }
     });
-
-
-
-
-
-    // id="pilih-anggota"
     $('#pilih-anggota').on('change', function() {
         const anggota = $(this).val(); 
         if(anggota) {
             $.ajax({
-                url: url+'Anggota/get_status_anggota', // Ganti dengan URL endpoint di server untuk mengambil buku
+                url: url+'Anggota/get_status_anggota', 
                 method: 'POST',
                 data: { kd_anggota: anggota },
                 dataType: 'json',
@@ -121,45 +101,34 @@ $(document).ready(function() {
                 }
             }); 
         } else {
-            // Jika kategori tidak dipilih, kosongkan daftar buku
             $('#jumlahPinjam').html(''); 
         }
-    })
-
-
-
-
-    
-if($('#kelas').val()){
-	let alfabe = [];
-    let alfabe1 = [];
-    const jurusa = `
-        <label for="rombel">Jurusan</label>
-        <select name="jurusan" id="jurusan" class="form-control" required>
-            <option value="">Pilih Jurusan</option>
-            <option value="IPA">IPA</option>
-            <option value="IPS">IPS</option>
-            <option value="BAHASA">BAHASA</option>
-        </select> 
-`;
-    // Loop untuk menghasilkan opsi alfabet
-    for (let y = 65; y <= 90; y++) {
-        alfabe.push("<option>" + String.fromCharCode(y) + "</option>");
+    })    
+    if($('#kelas').val()){
+        let alfabe = [];
+        let alfabe1 = [];
+        const jurusa = `
+            <label for="rombel">Jurusan</label>
+            <select name="jurusan" id="jurusan" class="form-control" required>
+                <option value="">Pilih Jurusan</option>
+                <option value="IPA">IPA</option>
+                <option value="IPS">IPS</option>
+                <option value="BAHASA">BAHASA</option>
+            </select>  `;
+        for (let y = 65; y <= 90; y++) {
+            alfabe.push("<option>" + String.fromCharCode(y) + "</option>");
+        }
+        for (let  z= 1; z <= 10; z++) {        
+            alfabe1+=("<option>" + z + "</option>");
+        }
+        if($('#kelas').val() != 'X'){
+            $(".jurusan-box").html(jurusa);
+            $(".rombel").html('<option value="">Pilih Rombel</option>'+alfabe1)
+        }else{
+        $(".rombel").html('<option value="">Pilih Rombel</option>'+ alfabe)
+            $(".jurusan-box").html('');
+        }
     }
-    for (let  z= 1; z <= 10; z++) {        
-        alfabe1+=("<option>" + z + "</option>");
-    }
-    if($('#kelas').val() != 'X'){
-        $(".jurusan-box").html(jurusa);
-        $(".rombel").html('<option value="">Pilih Rombel</option>'+alfabe1)
-    }else{
-       $(".rombel").html('<option value="">Pilih Rombel</option>'+ alfabe)
-        $(".jurusan-box").html('');
-    }
-}
-
-   
-
     $('#kelas').on('change', function(){
         let alfabet = [];
         let alfabet1 = [];
@@ -186,13 +155,4 @@ if($('#kelas').val()){
             $(".jurusan-box").html('');
         }
     })
-
-
-    
-
-
-   //$('a[href="#settings"]').tab('show'); // Memilih tab 'Kelas' secara otomatis
-
-
-
 })

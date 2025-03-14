@@ -30,6 +30,21 @@ class Anggota extends CI_Controller
         $data = ['breadcrumb' => "DETAIL ANGGOTA", 'data' => $anggota, 'js' => 'anggota.js', 'pinjam' => $pinjam];
         $this->viewAdmin('anggota/detail', $data);
     }
+    public function resetPassword($kdAnggota)
+    {
+        $query = $this->anggota->getById($kdAnggota);
+        $pass = ['password' => password_hash($query['kd_anggota'], PASSWORD_DEFAULT)];
+        $reset =  $this->anggota->update($pass, $kdAnggota);
+
+        if ($reset) {
+
+            $this->session->set_flashdata(['msg' => "Password Berhasil Direset", "class" => "success"]);
+            redirect('Anggota');
+        } else {
+            notif('Password Gagal Direset', 'error', 'Anggota');
+        }
+    }
+
 
     public function add()
     {

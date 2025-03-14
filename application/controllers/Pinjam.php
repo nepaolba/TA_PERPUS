@@ -25,7 +25,7 @@ class Pinjam extends CI_Controller
 
     public function tambahPeminjaman()
     {
-        $anggota = $this->db->select('kd_anggota, nama_anggota')->order_by('nama_anggota', 'ASC')->get('anggota')->result();
+        $anggota = $this->db->select('kd_anggota, nama_anggota, status_anggota')->order_by('nama_anggota', 'ASC')->get('anggota')->result();
         $kategori = $this->db->order_by('kategori', 'ASC')->get('kategori')->result();
         $data = [
             'breadcrumb' => "PEMINJAMAN BUKU",
@@ -92,6 +92,12 @@ class Pinjam extends CI_Controller
             return false; // Stok habis
         }
     }
+    public function perpanjang($id_pinjam, $tgl)
+    {
+        $oneWeek = date("Y-m-d H:i:s", $tgl + (168 * 60 * 60));
+        $this->db->set('tgl_kembali', $oneWeek)->set('status', 3)->where('id_pinjam', $id_pinjam)->update('peminjaman');
+        notif('Berhasil diperpanjang', 'success', 'Pinjam');
+    }
 
 
     public function cek_jumlah_peminjaman($kd_anggota)
@@ -104,15 +110,41 @@ class Pinjam extends CI_Controller
             return true;
         }
     }
-    //Peminjaman kelas 
 
-
+    //! Peminjaman kelas 
     public function simpanPeminjamanKelas()
     {
-        $kd_buku = $this->input->post('judul-buku');
-        $nis_nip = $this->input->post('pilih-anggota');
+        $kd_buku = $this->input->post('judul-buku-kelas');
+        $kd_anggota = $this->input->post('pilih-anggota-kelas');
+        $kelas = $this->input->post('kelas') . '-' . (null != $this->input->post('jurusan')  ? $this->input->post('jurusan') . '-' . $this->input->post('rombel') : $this->input->post('rombel'));
         if ($this->cek_stok_buku($kd_buku)) {
-            $kelas = $this->input->post('kelas') . '-' . (null != $this->input->post('jurusan')  ? $this->input->post('jurusan') . '-' . $this->input->post('rombel') : $this->input->post('rombel'));
+            $hasil = $this->db->select("*")->from('peminjaman')->where('nis_nip', $kd_anggota)->where('kd_buku', $kd_buku)->where('kelas', $kelas)->get()->row();
+            if ($hasil) {
+                notif('Buku Belum di Kembalikan', 'error', 'Pinjam/tambahPeminjaman');
+            } else {
+                $post = $this->input->post();
+                $data = [
+                    "jumlah_pinjam" => $post['jumlah_buku'],
+                    "tgl_pinjam" =>  date('Y-m-d') . ' ' . $post['jam'],
+                    "tgl_kembali" => date('Y-m-d') . ' ' . $post['tanggal'],
+                    "nis_nip" => $kd_anggota,
+                    "kd_buku" => $kd_buku,
+                    "kd_petugas" => $this->session->userdata('id'),
+                    "kelas" => $kelas,
+                    "jenis_pinjam" => 1,
+                    "status" => 0,
+                ];
+                $insert = $this->peminjaman->add($data);
+                if ($insert) {
+                    $ambilDataBuku = $this->buku->getOne($kd_buku);
+                    $sisa_stok = $ambilDataBuku['sisa_stok'] - $post['jumlah_buku'];
+                    $jumlah_dipinjam = $ambilDataBuku['jumlah_dipinjam'] + $post['jumlah_buku'];
+                    $this->buku->update(['sisa_stok' => $sisa_stok, 'jumlah_dipinjam' => $jumlah_dipinjam], $kd_buku);
+                    notif('data berhasil disimpan', 'success', 'Pinjam');
+                } else {
+                    notif('data gagal disimpan', 'error', 'Pinjam');
+                }
+            }
         } else {
             notif('Stok buku tidak tersedia', 'error', 'Pinjam');
         }

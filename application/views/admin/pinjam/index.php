@@ -67,7 +67,7 @@
                                        </div>
                                        <div class="modal-footer">
                                           <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><small>Batal</small></button>
-                                          <a href="<?= base_url('Peminjaman/perpanjang/' . $pinjam['id_pinjam'] . '/' . strtotime($pinjam['tgl_kembali'])) ?>" class="btn btn-sm btn-primary"><small>Ya ! Perpanjang</small></a>
+                                          <a href="<?= base_url('Pinjam/perpanjang/' . $pinjam['id_pinjam'] . '/' . strtotime($pinjam['tgl_kembali'])) ?>" class="btn btn-sm btn-primary"><small>Ya ! Perpanjang</small></a>
                                        </div>
                                     </div>
                                  </div>
