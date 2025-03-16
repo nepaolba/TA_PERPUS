@@ -13,6 +13,7 @@
 <script src="<?= base_url('assets/') ?>bower_components/jquery-ui/jquery-ui.min.js"></script>
 <script>
    $.widget.bridge('uibutton', $.ui.button);
+   const url = window.location.origin + window.location.pathname.replace(/\/[^/]+$/, '/');
 </script>
 <script src="<?= base_url('assets/') ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- <script src="<?= base_url('assets/') ?>bower_components/raphael/raphael.min.js"></script> -->

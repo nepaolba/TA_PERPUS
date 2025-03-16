@@ -1,9 +1,29 @@
 <div class="row">
     <div id="flash" data-flash="<?= $this->session->flashdata('msg') ?>" data-class="<?= $this->session->flashdata('class') ?>"></div>
+    <div class="col-lg-6">
+        <form id="frm-filter-pengembalian">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <input type="date" name="start_date" id="start_date" required class="form-control">
+                    </div>
+                </div>
+                <label for="start_date" class="col-lg-1 d-flex align-items-center justify-content-center" style="height: 34px;">s/d</label>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <input type="date" id="end_date" name="end_date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-info">FILTER</button>
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="col-lg-12">
         <div class="box box-solid new-shadow">
             <div class="box-body">
-                <table class="table" id="example1">
+                <table class="table" id="pengembalian">
                     <thead>
                         <tr>
                             <th>Nama Anggota</th>
@@ -15,23 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($pengembalian as $key => $value) : ?>
-                            <tr>
-                                <td>
-                                    <a href=""><?= $value['nama_anggota'] ?></a><br>
-                                    <?= $value['kelas'] ?>
-                                </td>
-                                <td>
-                                    <a href=""><?= $value['judul_buku'] ?></a>
-                                    <p>Pengarang : <?= $value['penulis'] ?></p>
-                                </td>
-                                <td><?= $value['jumlah_kembali'] ?></td>
-                                <td><?= $value['tgl_pinjam'] ?></td>
-                                <td><?= $value['tgl_kembali'] ?></td>
-                                <td><?= $value['tgl'] ?></td>
 
-                            </tr>
-                        <?php endforeach ?>
                     </tbody>
                 </table>
             </div>
