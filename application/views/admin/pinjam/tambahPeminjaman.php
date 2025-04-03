@@ -1,36 +1,5 @@
 <div id="flash" data-flash="<?= $this->session->flashdata('msg') ?>" data-class="<?= $this->session->flashdata('class') ?>"></div>
-<script type="text/javascript">
-    function showTime() {
-        var a_p = "";
-        var today = new Date();
-        var curr_hour = today.getHours();
-        var curr_minute = today.getMinutes();
-        var curr_second = today.getSeconds();
-        if (curr_hour < 12) {
-            a_p = "AM";
-        } else {
-            a_p = "PM";
-        }
-        if (curr_hour == 0) {
-            curr_hour = 12;
-        }
-        if (curr_hour > 12) {
-            curr_hour = curr_hour - 12;
-        }
-        curr_hour = checkTime(curr_hour);
-        curr_minute = checkTime(curr_minute);
-        curr_second = checkTime(curr_second);
-        document.getElementById('jam').value = curr_hour + ":" + curr_minute + ":" + curr_second;
-    }
 
-    function checkTime(i) {
-        if (i < 10) {
-            i = "0" + i;
-        }
-        return i;
-    }
-    setInterval(showTime, 500);
-</script>
 <div class="col-md-12">
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
@@ -51,16 +20,18 @@
                         </div>
                     </div>
                 </div>
-                <form class="form-horizontal" action="<?= base_url('Pinjam/simpanPeminjaman') ?>" method="post">
+                <form class="form-horizontal" action="<?= base_url('Pinjam/tambahPeminjaman') ?>" method="post">
+                    <input type="text" value="individu" name="jenis">
                     <div class="form-group">
                         <label for="pilih-anggota" class="col-sm-2 control-label">Pilih Anggota</label>
                         <div class="col-sm-8">
                             <select name="pilih-anggota" id="pilih-anggota" class="form-control select2">
                                 <option value="">PILIH ANGGOTA</option>
                                 <?php foreach ($dataAnggota as $anggota): ?>
-                                    <option value="<?= $anggota->kd_anggota ?>"><?= $anggota->nama_anggota ?></option>
+                                    <option value="<?= $anggota['kd_anggota'] ?>" <?= set_select('pilih-anggota', $anggota['kd_anggota']) ?>><?= $anggota['nama_anggota'] ?></option>
                                 <?php endforeach; ?>
                             </select>
+                            <?= form_error('pilih-anggota', '<small class="text-danger">', '</small>') ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -68,10 +39,8 @@
                         <div class="col-sm-8">
                             <select name="kategori-buku" id="kategori-buku" class="form-control select2">
                                 <option value="">PILIH KATEGORI BUKU</option>
-                                <?php foreach ($dataKategori as $kategori): ?>
-                                    <option value="<?= $kategori->kd_kategori ?>"><?= $kategori->kategori ?></option>
-                                <?php endforeach; ?>
                             </select>
+                            <?= form_error('kategori-buku', '<small class="text-danger">', '</small>') ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -80,6 +49,7 @@
                             <select name="judul-buku" id="judul-buku" class="form-control select2">
                                 <option value="">PILIH JUDUL BUKU</option>
                             </select>
+                            <?= form_error('judul-buku', '<small class="text-danger">', '</small>') ?>
                         </div>
                     </div>
                     <div class="form-group">

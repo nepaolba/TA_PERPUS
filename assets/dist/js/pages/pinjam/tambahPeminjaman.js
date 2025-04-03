@@ -1,4 +1,4 @@
-const url = $(document)[0].location.origin +"/perpus/";
+// const url = $(document)[0].location.origin +"/perpus/";
 $(".select2").select2();
 $(document).ready(function() {    
     const Toast = Swal.mixin({
@@ -22,11 +22,12 @@ $(document).ready(function() {
             icon: Fclass
           });
     }
-    $('#kategori-buku').on('change', function() {
-        const kategoriId = $(this).val();  
+
+
+    function changeKategoriBuku(kategoriId) {
         if(kategoriId) {
             $.ajax({
-                url: url+'Buku/get_buku_by_kategori',
+                url: url+'get_buku_by_kategori',
                 method: 'POST',
                 data: { kategori_id: kategoriId },
                 dataType: 'json',
@@ -35,7 +36,7 @@ $(document).ready(function() {
                     $('#judul-buku').append('<option value="">PILIH JUDUL BUKU</option>'); 
                     $.each(response.dataBuku, function(index, buku) {
                         $('#judul-buku').append('<option value="' + buku.kd_buku+ '">' + buku.judul_buku + '</option>');
-                        console.log(buku)
+                        
                     });
                 },
                 error: function() {
@@ -46,12 +47,64 @@ $(document).ready(function() {
             $('#judul-buku').empty();
             $('#judul-buku').append('<option value="">PILIH JUDUL BUKU</option>');
         }
+    }
+
+    function loadKategoriBuku() {
+        $.ajax({
+            url: url + 'get_kategori',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                $('#kategori-buku').empty();
+                $('#kategori-buku').append('<option value="">PILIH KATEGORI BUKU</option>');
+                $.each(response, function(index, kategori) {
+                    $('#kategori-buku').append('<option value="' + kategori.kd_kategori + '">' + kategori.kategori + '</option>');
+                });
+            },
+            error: function() {
+                alert('Gagal mengambil data kategori buku.');
+            }
+        });
+    }
+    
+    function cekStatusPeminjamanBuku(kd_buku, kd_anggota) {
+        $.ajax({
+            url: url + 'ajax_validasi_peminjaman',
+            method: 'POST',
+            data: { kd_buku, kd_anggota },
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function() {
+                alert('Gagal mengambil data buku.');
+            }
+        });
+    }
+    
+    // Panggil fungsi untuk memuat kategori buku saat halaman dimuat
+    loadKategoriBuku();
+    
+    // Event listener untuk perubahan kategori buku
+    $('#kategori-buku').on('change', function() {
+        const kategoriId = $(this).val();
+        changeKategoriBuku(kategoriId);
     });
+    
+    // Event listener untuk memeriksa status peminjaman buku
+    $('#judul-buku').on('change', function() {
+        const kd_buku = $(this).val();
+        const anggota = $('#pilih-anggota').val();
+        cekStatusPeminjamanBuku(kd_buku, anggota);
+    });
+
+
+
     $('#kategori-buku-kelas').on('change', function() {
         const kategoriId = $(this).val();   
         if(kategoriId) {
             $.ajax({
-                url: url+'Buku/get_buku_by_kategori',
+                url: url+'get_buku_by_kategori',
                 method: 'POST',
                 data: { kategori_id: kategoriId },
                 dataType: 'json',
@@ -73,16 +126,24 @@ $(document).ready(function() {
             $('#judul-buku-kelas').append('<option value="">PILIH JUDUL BUKU</option>');
         }
     });
+
+
+
+
+
+
     $('#pilih-anggota').on('change', function() {
         const anggota = $(this).val(); 
+        loadKategoriBuku();
+        changeKategoriBuku(kategoriId="");
         if(anggota) {
             $.ajax({
-                url: url+'Anggota/get_status_anggota', 
+                url: url+'get_status_anggota', 
                 method: 'POST',
                 data: { kd_anggota: anggota },
                 dataType: 'json',
                 success: function(response) {
-                    if(response.status_anggota == '0'){
+                    if(response.jenis_anggota == '0'){
                         $('#jumlahPinjam').html(''); 
                         $('#jumlahPinjam').append(`
                                  <div class="form-group">
@@ -155,4 +216,35 @@ $(document).ready(function() {
             $(".jurusan-box").html('');
         }
     })
+//    $('a[href="#settings"]').tab('show');
 })
+function showTime() {
+    var a_p = "";
+    var today = new Date();
+    var curr_hour = today.getHours();
+    var curr_minute = today.getMinutes();
+    var curr_second = today.getSeconds();
+    if (curr_hour < 12) {
+        a_p = "AM";
+    } else {
+        a_p = "PM";
+    }
+    if (curr_hour == 0) {
+        curr_hour = 12;
+    }
+    if (curr_hour > 12) {
+        curr_hour = curr_hour - 12;
+    }
+    curr_hour = checkTime(curr_hour);
+    curr_minute = checkTime(curr_minute);
+    curr_second = checkTime(curr_second);
+    document.getElementById('jam').value = curr_hour + ":" + curr_minute + ":" + curr_second;
+}
+
+function checkTime(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+setInterval(showTime, 500);

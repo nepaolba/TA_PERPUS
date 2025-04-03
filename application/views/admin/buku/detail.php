@@ -1,18 +1,4 @@
 <div class="row">
-   <div class="col-lg-12">
-      <?php $link = $this->session->flashdata('kembali');  ?>
-      <a href="<?= base_url($link ? $link : 'Buku') ?>" class="btn btn-sm bg-orange">KEMBALI</a>
-      <br><br>
-   </div>
-</div>
-<div class="row">
-   <div class="col col-lg-3">
-      <div class="box box-solid new-shadow">
-         <div class="box-body">
-            <img src="<?= base_url('assets/dist/img/buku/' . $book->foto) ?>" alt="" width="100%">
-         </div>
-      </div>
-   </div>
    <div class="col col-lg-9">
       <div class="box box-solid new-shadow">
          <div class="box-body">
@@ -78,6 +64,13 @@
          </div>
       </div>
    </div>
+   <div class="col col-lg-3">
+      <div class="box box-solid new-shadow">
+         <div class="box-body">
+            <img src="<?= base_url('assets/dist/img/buku/' . $book->foto) ?>" alt="" width="100%">
+         </div>
+      </div>
+   </div>
 </div>
 
 <div class="row">
@@ -90,7 +83,6 @@
             <table class="table">
                <thead>
                   <tr>
-                     <!-- <th>No</th> -->
                      <th>Nama Peminjam</th>
                      <th>Tgl Jatu Tempo</th>
                      <th>Total Pinjam</th>
@@ -109,16 +101,19 @@
                </tbody>
                <tfoot>
                   <tr style="background-color: #00c2ff1f; border-radius:5px">
-                     <!-- <th></th> -->
                      <th colspan="2"><strong>TOTAL :</strong></th>
-                     <!-- <th></th>
-                     <th></th> -->
                      <th><strong><?= $total_pinjam; ?></strong></th>
-
                   </tr>
                </tfoot>
             </table>
          </div>
       </div>
+   </div>
+</div>
+<div class="row">
+   <div class="col-lg-12">
+      <?php $link = $this->session->flashdata('kembali');  ?>
+      <a href="<?= base_url($link ? $link : 'Buku') ?>" class="btn btn-sm bg-orange">KEMBALI</a>
+      <br><br>
    </div>
 </div>

@@ -1,10 +1,5 @@
 <div class="row">
    <div class="col-lg-12">
-      <?php $link = $this->session->flashdata('kembali');  ?>
-      <a href="<?= base_url($link ? $link : 'Anggota') ?>" class="btn btn-sm bg-orange">KEMBALI</a>
-      <br><br>
-   </div <div class="row">
-   <div class="col-lg-12">
       <div class="box box-solid new-shadow">
          <div class="box-body">
             <table class="table">
@@ -77,5 +72,12 @@
             </table>
          </div>
       </div>
+   </div>
+</div>
+<div class="row">
+   <div class="col-lg-12">
+      <?php $link = $this->session->flashdata('kembali');  ?>
+      <a href="<?= base_url($link ? $link : 'Anggota') ?>" class="btn btn-sm bg-orange">KEMBALI</a>
+      <br><br>
    </div>
 </div>

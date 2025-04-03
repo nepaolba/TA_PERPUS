@@ -20,6 +20,97 @@ class Peminjaman_model extends CI_Model
       return $query;
    }
 
+   public function getPeminjamanIndividu()
+   {
+      $query = $this->db->select('*')
+         ->from('peminjaman')
+         ->join('buku', 'buku.kd_buku = peminjaman.kd_buku')
+         ->join('anggota', 'anggota.kd_anggota = peminjaman.pj1')
+         ->join('rak', 'rak.id_rak = buku.id_rak')
+         ->join('kategori', 'kategori.kd_kategori = buku.kd_kategori')
+         ->join('petugas', 'petugas.kd_petugas = peminjaman.kd_petugas')
+         ->where('peminjaman.status !=', 'dikembalikan')
+         ->where('peminjaman.jenis_pinjam =', 0)
+         ->order_by('peminjaman.id_pinjam', 'DESC')
+         ->get()->result_array();
+      return $query;
+   }
+   public function getPeminjamanKelas()
+   {
+      $query = $this->db->select('*')
+         ->from('peminjaman')
+         ->join('buku', 'buku.kd_buku = peminjaman.kd_buku')
+         ->join('anggota', 'anggota.kd_anggota = peminjaman.pj1')
+         ->join('rak', 'rak.id_rak = buku.id_rak')
+         ->join('kategori', 'kategori.kd_kategori = buku.kd_kategori')
+         ->join('petugas', 'petugas.kd_petugas = peminjaman.kd_petugas')
+         ->where('peminjaman.status !=', 'dikembalikan')
+         ->where('peminjaman.jenis_pinjam =', 1)
+         ->order_by('peminjaman.id_pinjam', 'DESC')
+         ->get()->result_array();
+      return $query;
+   }
+
+   public function periksaBatasPeminjaman($kd_anggota)
+   {
+      $anggota = $this->db->get_where('anggota', ['kd_anggota' => $kd_anggota])->row();
+      if (!$anggota) {
+         return false; // Jika anggota tidak ditemukan, batasi peminjaman
+      }
+      if ($anggota->jenis_anggota == 1) {
+         $peminjaman = $this->db->where('pj1', $kd_anggota)->where('jenis_pinjam', '0')->where('status', 'dipinjam')->count_all_results('peminjaman');
+         return (int)$peminjaman < 3;
+      }
+      return true;
+   }
+
+   public function periksaKetersediaanStokBuku($kd_buku)
+   {
+      $buku = $this->db->select('sisa_stok')->where('kd_buku', $kd_buku)->get('buku')->row();
+      return ($buku && $buku->sisa_stok > 0);
+   }
+
+   public function periksaBukuSudahDipinjam($kd_buku, $kd_anggota)
+   {
+      $peminjaman = $this->db->where('kd_buku', $kd_buku)->where('pj1', $kd_anggota)->where('status', 'dipinjam')->where('jenis_pinjam', '0')->count_all_results('peminjaman');
+      return $peminjaman > 0;
+   }
+   public function simpanPeminjaman($id_peminjaman, $kd_buku, $pj1, $jatu_tempo, $jumlahPinjam, $kd_petugas)
+   {
+      $data = [
+         'id_pinjam'     => $id_peminjaman,
+         'kd_buku'       => $kd_buku,
+         'pj1'           => $pj1,
+         'tgl_pinjam'    => date('Y-m-d H:i:s'),
+         'tgl_kembali'   => $jatu_tempo . date(' H:i:s'),
+         'jumlah_pinjam' => $jumlahPinjam,
+         'jenis_pinjam'  => 0,
+         'status'        => 'dipinjam',
+         'kd_petugas'    => $kd_petugas
+      ];
+      return $this->db->insert('peminjaman', $data); // Simpan ke database
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    public function countPinjam()
    {
       return $this->db->count_all('peminjaman');

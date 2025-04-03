@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/perpus/';
-$config['logout_redirect'] = 'Auth'; // Sesuaikan dengan nama kontroler atau halaman yang sesuai
+$config['logout_redirect'] = 'Welcome'; // Sesuaikan dengan nama kontroler atau halaman yang sesuai
 
 /*
 |--------------------------------------------------------------------------

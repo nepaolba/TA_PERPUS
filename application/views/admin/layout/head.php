@@ -3,21 +3,15 @@
 
 <head>
    <meta charset="utf-8">
-   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <title>PERPUSTAKAAN | Dashboard</title>
    <link rel="icon" href="<?= base_url('assets/') ?>dist/img/logo.png" type="image/x-icon">
    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-   <!-- <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap/dist/css/bootstrap.min.css"> -->
    <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/font-awesome/css/font-awesome.min.css">
    <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/Ionicons/css/ionicons.min.css">
    <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/morris.js/morris.css">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.1/dist/sweetalert2.min.css">
-   <!-- <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"> -->
-   <!-- <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/toastr/toastr.min.css"> -->
-   <!-- <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/jvectormap/jquery-jvectormap.css"> -->
    <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-   <!-- <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap-daterangepicker/daterangepicker.css"> -->
    <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/timepicker/bootstrap-timepicker.min.css">
    <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/iCheck/all.css">
    <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
@@ -26,7 +20,6 @@
    <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap/dist/css/bootstrap.min.css">
    <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/AdminLTE.min.css">
    <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/skins/_all-skins.min.css">
-   <!-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> -->
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,800;1,900&display=swap" rel="stylesheet">
@@ -49,10 +42,6 @@
       }
 
 
-      /* label {
-         font-weight: 400;
-      } */
-
       label {
          text-transform: uppercase;
          font-size: 9px;
@@ -66,26 +55,6 @@
          font-weight: 400;
       }
 
-
-      /* .swal2-popup {
-         display: flex !important;
-         align-items: center;
-         width: auto !important;
-      }
-
-      .custom-swal2-popup {
-         display: grid !important;
-         width: 32em !important;
-      }
-
-      .swal2-popup.swal2-toast .swal2-title {
-         font-size: 1rem;
-         font-weight: 400;
-      }
-
-      .swal2-popup.swal2-toast {
-         font-size: 1.5rem;
-      } */
       .swal2-title {
          font-size: 2.5rem !important;
       }
@@ -198,16 +167,6 @@
       .flex-direction-column {
          flex-direction: column
       }
-
-      /* #image-preview {
-
-         background-color: darkslategrey;
-         margin: 0;
-         padding: 0;
-         border-radius: 10px;
-         padding: 5px;
-
-      } */
 
       #image-preview img {
          max-width: 300px;
@@ -348,74 +307,19 @@
          color: #262626 !important;
       }
 
-      /* Palet warna */
-      /* 
-      .bg-primary {
-         background-color: #00bff3;
-         color: #FFF;
-      }
-
-      .text-primary {
-         color: #00bff3;
-      }
-
-      .bg-success {
-         background-color: #1cbbb4;
-         color: #FFF;
-      }
-
-      .text-success {
-         color: #1cbbb4;
-      }
-
-      .bg-warning {
-         background-color: #fbaf5d;
-         color: #FFF;
-      }
-
-      .text-warning {
-         color: #fbaf5d;
-      }
-
-      .bg-danger {
-         background-color: #f26d7d;
-         color: #FFF;
-      }
-
-      .text-danger {
-         color: #f26d7d;
-      } */
-
-
-
-      /* 
-      .skin-blue .main-header .navbar {
-         background-color: #9d9a9d;
-      } */
-
-
-
-      /* .skin-blue .main-header .navbar {
-         background: url('assets/dist/img/header.png');top 
-      } */
       .dataTables_filter {
          display: flex;
          align-items: center;
-         /* Untuk memusatkan vertikal */
       }
 
       .dataTables_filter input {
          flex: 1;
-         /* Membuat input fleksibel agar mengisi ruang yang tersedia */
          min-width: 150px;
-         /* Setel lebar minimum jika diperlukan */
          max-width: 100%;
-         /* Menghindari input melebihi lebar kontainer */
       }
 
       .dataTables_filter .form-control {
          width: 100%;
-         /* Input menyesuaikan dengan lebar kontainer */
       }
    </style>
 </head>

@@ -19,7 +19,6 @@ class Anggota extends CI_Controller
             'data' => $this->anggota->getAll(),
             'js' => 'anggota.js'
         ];
-
         $this->viewAdmin('anggota/anggota', $data);
     }
 
@@ -30,6 +29,7 @@ class Anggota extends CI_Controller
         $data = ['breadcrumb' => "DETAIL ANGGOTA", 'data' => $anggota, 'js' => 'anggota.js', 'pinjam' => $pinjam];
         $this->viewAdmin('anggota/detail', $data);
     }
+
     public function resetPassword($kdAnggota)
     {
         $query = $this->anggota->getById($kdAnggota);
@@ -48,7 +48,7 @@ class Anggota extends CI_Controller
 
     public function add()
     {
-        $this->form_validation->set_rules('status_anggota', 'Status', 'trim|required');
+        $this->form_validation->set_rules('sts_anggota', 'Status', 'trim|required');
         $this->form_validation->set_rules('kd_anggota', 'NIP/NIS/Username', 'trim|required|max_length[20]|is_unique[anggota.kd_anggota]');
         $this->form_validation->set_rules('nama_anggota', 'Nama', 'trim|required');
         $this->form_validation->set_rules('jk', 'Jenis Kelamin', 'trim|required');

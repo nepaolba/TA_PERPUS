@@ -1,10 +1,17 @@
-$("#peminjaman").DataTable({	
+$("#peminjaman, #peminjamanK").DataTable({	
 	ordering: false,
 	autoWidth: true,   
     language: {
         search: ""
     },
 });
+// $("#peminjamanK").DataTable({	
+// 	ordering: false,
+// 	autoWidth: true,   
+//     language: {
+//         search: ""
+//     },
+// });
 $('.dataTables_filter input')
 .attr('placeholder', 'Cari Data Peminjaman...')
     .css({
@@ -37,3 +44,6 @@ $('.dataTables_filter input')
             icon: Fclass
           });
     }
+    // $('#activity').addClass('active');
+    // console.log($('a[href="#settings"]'));
+    //console.log($('#settings'))

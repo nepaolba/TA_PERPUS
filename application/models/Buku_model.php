@@ -104,6 +104,20 @@ class Buku_model extends CI_Model
       $this->db->or_like('penerbit', $keyword);
       return $this->db->get()->result();
    }
+
+   public function updateStokPeminjaman($kd_buku, $jumlahPinjam)
+   {
+      $this->db->set('sisa_stok', 'sisa_stok - ' . (int)$jumlahPinjam, FALSE)
+         ->where('kd_buku', $kd_buku)
+         ->update('buku');
+   }
+
+   public function updateJumlahPeminjaman($kd_buku, $jumlahPinjam)
+   {
+      $this->db->set('jumlah_dipinjam', 'jumlah_dipinjam + ' . (int)$jumlahPinjam, FALSE)
+         ->where('kd_buku', $kd_buku)
+         ->update('buku');
+   }
 }
 
 /* End of file Book_model.php */
