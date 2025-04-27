@@ -161,40 +161,40 @@ class Pinjam extends CI_Controller
         }
     }
 
-    // public function getIdPeminjaman($tanggal)
-    // {
-    //     $tgl = date('Y-m-d', strtotime($tanggal));
-    //     $this->db->select("LPAD(COUNT(*) + 1, 4, '0') AS nomor_urut");
-    //     $this->db->from("peminjaman");
-    //     $this->db->where("DATE(tgl_pinjam) =", $tgl);
-    //     $query = $this->db->get();
-    //     $result = $query->row();
-    //     $nomor_urut = $result ? $result->nomor_urut : $nomor_urut = '0001';
-    //     return $nomor_urut;
-    // }
     public function getIdPeminjaman($tanggal)
     {
-        $tgl = date('Ymd', strtotime($tanggal)); // Format: 20250426
-        $prefix = 'PJI' . $tgl;
-
-        // Ambil ID terakhir yang dimulai dengan prefix tanggal itu
-        $this->db->select("RIGHT(id_pinjam, 4) AS nomor_urut");
+        $tgl = date('Y-m-d', strtotime($tanggal));
+        $this->db->select("LPAD(COUNT(*) + 1, 4, '0') AS nomor_urut");
         $this->db->from("peminjaman");
-        $this->db->like("id_pinjam", $prefix, 'after'); // WHERE id_peminjaman LIKE 'PJI20250426%'
-        $this->db->order_by("id_pinjam", "DESC");
-        $this->db->limit(1);
+        $this->db->where("DATE(tgl_pinjam) =", $tgl);
         $query = $this->db->get();
-
-        if ($query->num_rows() > 0) {
-            $last_number = (int) $query->row()->nomor_urut;
-            $new_number = $last_number + 1;
-        } else {
-            $new_number = 1;
-        }
-
-        $nomor_urut = str_pad($new_number, 4, '0', STR_PAD_LEFT);
-        return $prefix . '-' . $nomor_urut; // Contoh hasil: PJI20250426-0007
+        $result = $query->row();
+        $nomor_urut = $result ? $result->nomor_urut : $nomor_urut = '0001';
+        return $nomor_urut;
     }
+    // public function getIdPeminjaman($tanggal)
+    // {
+    //     $tgl = date('Ymd', strtotime($tanggal)); // Format: 20250426
+    //     $prefix = 'PJI' . $tgl;
+
+    //     // Ambil ID terakhir yang dimulai dengan prefix tanggal itu
+    //     $this->db->select("RIGHT(id_pinjam, 4) AS nomor_urut");
+    //     $this->db->from("peminjaman");
+    //     $this->db->like("id_pinjam", $prefix, 'after'); // WHERE id_peminjaman LIKE 'PJI20250426%'
+    //     $this->db->order_by("id_pinjam", "DESC");
+    //     $this->db->limit(1);
+    //     $query = $this->db->get();
+
+    //     if ($query->num_rows() > 0) {
+    //         $last_number = (int) $query->row()->nomor_urut;
+    //         $new_number = $last_number + 1;
+    //     } else {
+    //         $new_number = 1;
+    //     }
+
+    //     $nomor_urut = str_pad($new_number, 4, '0', STR_PAD_LEFT);
+    //     return $prefix . '-' . $nomor_urut; // Contoh hasil: PJI20250426-0007
+    // }
     // public function getIdPeminjaman($tanggal)
     // {
     //     $tgl = date('Y-m-d', strtotime($tanggal));

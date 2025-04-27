@@ -19,7 +19,7 @@
                      <tr>
                         <td><?= $anggota['kd_anggota'] ?></td>
                         <td><?= $anggota['nama_anggota'] ?></td>
-                        <td><?= $anggota['status_anggota'] == 0 ? "Guru" : "Siswa" ?></td>
+                        <td><?= $anggota['sts_anggota'] == 0 ? "Guru" : "Siswa" ?></td>
                         <td>
                            <a href="<?= base_url('Anggota/resetPassword/' . $anggota['kd_anggota']) ?>" class="btn btn-xs bg-teal"> <i class="glyphicon glyphicon-zoom-in"></i><small> Reset Password</small></a>
                            <a href="<?= base_url('Anggota/detail/' . $anggota['kd_anggota']) ?>" class="btn btn-xs bg-teal"> <i class="glyphicon glyphicon-zoom-in"></i><small> DETAIL</small></a>

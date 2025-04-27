@@ -28,7 +28,7 @@ class Peminjaman_model extends CI_Model
          ->join('anggota', 'anggota.kd_anggota = peminjaman.pj1')
          ->join('rak', 'rak.id_rak = buku.id_rak')
          ->join('kategori', 'kategori.kd_kategori = buku.kd_kategori')
-         ->join('petugas', 'petugas.kd_petugas = peminjaman.kd_petugas')
+         // ->join('petugas', 'petugas.kd_petugas = peminjaman.kd_petugas')
          ->where('peminjaman.status !=', 'dikembalikan')
          ->where('peminjaman.jenis_pinjam =', 0)
          ->order_by('peminjaman.id_pinjam', 'DESC')
