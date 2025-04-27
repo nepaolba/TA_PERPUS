@@ -34,21 +34,29 @@
                     </tr>
                 </table>
                 <div class="row">
-                    <div class="col-lg-6 mb-3 mt-3">
+                    <div class="col-lg-12 mb-3 mt-3">
                         <a href="#" class="btn btn-outline-info btn-lg btn-block d-flex align-items-center justify-content-center" style="height: 80px;">
-                            <span>0 <br>Pinjam</span>
+                            <span><?= $buku->sisa_stok ?><br>Stok Buku</span>
                         </a>
                     </div>
-                    <div class="col-lg-6 mb-3 mt-3">
+                    <!-- <div class="col-lg-6 mb-3 mt-3">
                         <a href="#" class="btn btn-outline-info btn-lg btn-block d-flex align-items-center justify-content-center" style="height: 80px;">
                             <span>0 <br>Antri</span>
                         </a>
-                    </div>
+                    </div> -->
 
                 </div>
-                <a href="#" class="btn btn-success btn-block mr-1">
-                    Pinjam
-                </a>
+                <form action="<?= base_url('Pinjam/tambahPeminjaman') ?>" method="post">
+                    <input type="hidden" name="valid" value="valid">
+                    <input type="hidden" value="individu" name="jenis">
+                    <input type="hidden" value="<?= $this->session->userdata('id') ?>" name="pilih-anggota">
+                    <input type="hidden" value="<?= $buku->kd_buku ?>" name="judul-buku">
+                    <input type="hidden" value="<?= date("Y-m-d") ?>" name="jatu_tempo">
+                    <button type="submit" class="btn btn-success btn-block mr-1">
+                        Pinjam Sekarang
+                    </button>
+                </form>
+
             </div>
         </article>
     </div>

@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <form class="form-horizontal" action="<?= base_url('Pinjam/tambahPeminjaman') ?>" method="post">
-                    <input type="text" value="individu" name="jenis">
+                    <input type="hidden" value="individu" name="jenis">
                     <div class="form-group">
                         <label for="pilih-anggota" class="col-sm-2 control-label">Pilih Anggota</label>
                         <div class="col-sm-8">
@@ -71,6 +71,29 @@
             <div class="tab-pane" id="settings">
                 <form class="form-horizontal" method="post" action="<?= base_url('Pinjam/simpanPeminjamanKelas/') ?>">
                     <div class="form-group">
+                        <label for="pilih-anggota-kelas" class="col-sm-2 control-label">Penangung Jawab</label>
+                        <div class="col-sm-5">
+                            <select name="pilih-anggota-kelas1" id="pilih-anggota-kelas1" class="form-control select2" style="width: 100%;">
+                                <option value="">PILIH ANGGOTA</option>
+                                <?php foreach ($dataAnggota as $anggotak): ?>
+                                    <?php if ($anggotak['jenis_anggota'] == 1): ?>
+                                        <option value="<?= $anggotak['kd_anggota'] ?>"><?= $anggotak['nama_anggota'] ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-5">
+                            <select name="pilih-anggota-kelas2" id="pilih-anggota-kelas2" class="form-control select2" style="width: 100%;">
+                                <option value="">PILIH ANGGOTA</option>
+                                <?php foreach ($dataAnggota as $anggotak): ?>
+                                    <?php if ($anggotak['jenis_anggota'] == 1): ?>
+                                        <option value="<?= $anggotak['kd_anggota'] ?>"><?= $anggotak['nama_anggota'] ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="kelas" class="col-sm-2 control-label">Kelas</label>
                         <div class="col-sm-3">
                             <select name="kelas" id="kelas" class="form-control " required>
@@ -94,27 +117,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="pilih-anggota-kelas" class="col-sm-2 control-label">Pilih Anggota</label>
-                        <div class="col-sm-10">
-                            <select name="pilih-anggota-kelas" id="pilih-anggota-kelas" class="form-control select2" style="width: 100%;">
-                                <option value="">PILIH ANGGOTA</option>
-                                <?php foreach ($dataAnggota as $anggotak): ?>
-                                    <?php var_dump($anggotak);
-                                    if ($anggotak->status_anggota == 1): ?>
-                                        <option value="<?= $anggotak->kd_anggota ?>"><?= $anggotak->nama_anggota ?></option>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <label for="kategori-buku-kelas" class="col-sm-2 control-label">Kategori Buku</label>
                         <div class="col-sm-10">
                             <select name="kategoribukukelas" class="form-control select2" id="kategori-buku-kelas" style="width: 100%;">
                                 <option value="">PILIH KATEGORI BUKU</option>
                                 <?php foreach ($dataKategori as $kategoriK): ?>
-                                    <option value="<?= $kategoriK->kd_kategori ?>"><?= $kategoriK->kategori ?></option>
+                                    <option value="<?= $kategoriK['kd_kategori'] ?>"><?= $kategoriK['kategori'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

@@ -56,7 +56,9 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 $('#kategori-buku').empty();
+                // $('#kategori-buku-kelas').empty();
                 $('#kategori-buku').append('<option value="">PILIH KATEGORI BUKU</option>');
+                // $('#kategori-buku-kelas').append('<option value="">PILIH KATEGORI BUKU</option>');
                 $.each(response, function(index, kategori) {
                     $('#kategori-buku').append('<option value="' + kategori.kd_kategori + '">' + kategori.kategori + '</option>');
                 });

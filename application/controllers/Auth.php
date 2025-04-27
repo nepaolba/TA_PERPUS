@@ -41,7 +41,7 @@ class Auth extends CI_Controller
 			if ($cekPass) {
 				$setSession = ['nama' => $cek_username['nama_anggota'], 'id' => $cek_username['kd_anggota'], 'role' => 'user', 'dateLog' => date('Y-m-d H:s:i')];
 				$this->session->set_userdata($setSession);
-				redirect('Welcome');
+				redirect('Welcome/koleksi');
 			} else {
 				$this->session->set_flashdata('msg', 'Password Salah.');
 				redirect('Auth');

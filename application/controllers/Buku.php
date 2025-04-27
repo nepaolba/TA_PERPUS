@@ -130,7 +130,6 @@ class Buku extends CI_Controller
 
    public function getby_buku_id($id_buku)
    {
-
       $hasil = $this->buku->getOne($id_buku);
       echo json_encode($hasil);
    }

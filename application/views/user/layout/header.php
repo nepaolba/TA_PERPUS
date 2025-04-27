@@ -5,12 +5,16 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>Perpustakaan &rsaquo; SMAN 5 &mdash; KUPANG</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.1/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/modules/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/modules/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/style.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/components.css">
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+
+    <script src="<?= base_url() ?>assets/modules/jquery.min.js"></script>
+    <script src="<?= base_url('assets/') ?>bower_components/sweetalert2/sweetalert2.min.js"></script>
 </head>
 
 <body class="layout-3">
@@ -21,71 +25,8 @@
                 <a href="index.html" class="navbar-brand sidebar-gone-hide">Perpustakaan</a>
                 <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
                 <form class="form-inline ml-auto">
-                    <ul class="navbar-nav">
-                        <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
-                    </ul>
-                    <div class="search-element">
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
-                        <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-                        <div class="search-backdrop"></div>
-                        <div class="search-result">
-                            <div class="search-header">
-                                Histories
-                            </div>
-                            <div class="search-item">
-                                <a href="#">How to hack NASA using CSS</a>
-                                <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-                            </div>
-                            <div class="search-item">
-                                <a href="#">Kodinger.com</a>
-                                <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-                            </div>
-                            <div class="search-item">
-                                <a href="#">#Stisla</a>
-                                <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-                            </div>
-                            <div class="search-header">
-                                Result
-                            </div>
-                            <div class="search-item">
-                                <a href="#">
-                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-3-50.png" alt="product">
-                                    oPhone S9 Limited Edition
-                                </a>
-                            </div>
-                            <div class="search-item">
-                                <a href="#">
-                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-2-50.png" alt="product">
-                                    Drone X2 New Gen-7
-                                </a>
-                            </div>
-                            <div class="search-item">
-                                <a href="#">
-                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-1-50.png" alt="product">
-                                    Headphone Blitz
-                                </a>
-                            </div>
-                            <div class="search-header">
-                                Projects
-                            </div>
-                            <div class="search-item">
-                                <a href="#">
-                                    <div class="search-icon bg-danger text-white mr-3">
-                                        <i class="fas fa-code"></i>
-                                    </div>
-                                    Stisla Admin Template
-                                </a>
-                            </div>
-                            <div class="search-item">
-                                <a href="#">
-                                    <div class="search-icon bg-primary text-white mr-3">
-                                        <i class="fas fa-laptop"></i>
-                                    </div>
-                                    Create a new Homepage Design
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+
+
                 </form>
                 <ul class="navbar-nav navbar-right">
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -121,11 +62,11 @@
                         <li class="nav-item <?= $this->uri->segment(2) == 'koleksi' || $this->uri->segment(2) == 'detailkoleksi'  ? ' active' : '' ?>">
                             <a href="<?= base_url('Welcome/koleksi') ?>" class="nav-link"><i class="far fa-heart"></i><span>Koleksi</span></a>
                         </li>
-                        <li class="nav-item <?= $this->uri->segment(2) == 'kartuAnggota'  ? ' active' : '' ?>">
-                            <a href="<?= base_url('Welcome/kartuAnggota') ?>" class="nav-link"><i class="far fa-heart"></i><span>Kartu Anggota</span></a>
+                        <li class="nav-item <?= $this->uri->segment(2) == 'daftarPinjam'  ? ' active' : '' ?>">
+                            <a href="<?= base_url('Welcome/daftarPinjam') ?>" class="nav-link"><i class="far fa-heart"></i><span>Transaksi</span></a>
                         </li>
                         <li class="nav-item <?= $this->uri->segment(2) == 'kartuAnggota'  ? ' active' : '' ?>">
-                            <a href="<?= base_url('Welcome/kartuAnggota') ?>" class="nav-link"><i class="far fa-heart"></i><span>Daftar Peminjaman</span></a>
+                            <a href="<?= base_url('Welcome/kartuAnggota') ?>" class="nav-link"><i class="far fa-heart"></i><span>Kartu Anggota</span></a>
                         </li>
                     </ul>
                 </div>

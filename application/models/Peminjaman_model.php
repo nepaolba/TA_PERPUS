@@ -55,13 +55,23 @@ class Peminjaman_model extends CI_Model
    {
       $anggota = $this->db->get_where('anggota', ['kd_anggota' => $kd_anggota])->row();
       if (!$anggota) {
-         return false; // Jika anggota tidak ditemukan, batasi peminjaman
+         return false;
       }
       if ($anggota->jenis_anggota == 1) {
-         $peminjaman = $this->db->where('pj1', $kd_anggota)->where('jenis_pinjam', '0')->where('status', 'dipinjam')->count_all_results('peminjaman');
+         $this->db->from('peminjaman');
+         $this->db->where('pj1', $kd_anggota);
+         $this->db->where('jenis_pinjam', '0');
+         $this->db->where('status !=', 'dikembalikan'); // ini poin utamanya
+         $peminjaman = $this->db->count_all_results();
          return (int)$peminjaman < 3;
       }
+
       return true;
+   }
+   public function periksaBatasPeminjamanKelas($pj1, $pj2)
+   {
+      $peminjaman = $this->db->where('pj1', $pj1)->where('pj2', $pj2)->where('jenis_pinjam', '1')->where('status', 'dipinjam')->count_all_results('peminjaman');
+      return $peminjaman > 0;
    }
 
    public function periksaKetersediaanStokBuku($kd_buku)
@@ -72,12 +82,17 @@ class Peminjaman_model extends CI_Model
 
    public function periksaBukuSudahDipinjam($kd_buku, $kd_anggota)
    {
-      $peminjaman = $this->db->where('kd_buku', $kd_buku)->where('pj1', $kd_anggota)->where('status', 'dipinjam')->where('jenis_pinjam', '0')->count_all_results('peminjaman');
+      $peminjaman = $this->db
+         ->where('kd_buku', $kd_buku)
+         ->where('pj1', $kd_anggota)
+         ->where('jenis_pinjam', '0')
+         ->where('status !=', 'dikembalikan')
+         ->count_all_results('peminjaman');
       return $peminjaman > 0;
    }
    public function simpanPeminjaman($id_peminjaman, $kd_buku, $pj1, $jatu_tempo, $jumlahPinjam, $kd_petugas)
    {
-      $data = [
+      $data = array(
          'id_pinjam'     => $id_peminjaman,
          'kd_buku'       => $kd_buku,
          'pj1'           => $pj1,
@@ -85,9 +100,12 @@ class Peminjaman_model extends CI_Model
          'tgl_kembali'   => $jatu_tempo . date(' H:i:s'),
          'jumlah_pinjam' => $jumlahPinjam,
          'jenis_pinjam'  => 0,
-         'status'        => 'dipinjam',
-         'kd_petugas'    => $kd_petugas
-      ];
+         'status'        => 'pandding'
+      );
+      if ($kd_petugas != "0") {
+         $data['kd_petugas'] = $kd_petugas;
+         $data['status'] = 'dipinjam';
+      }
       return $this->db->insert('peminjaman', $data); // Simpan ke database
    }
 

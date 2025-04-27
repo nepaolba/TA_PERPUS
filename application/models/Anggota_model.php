@@ -9,6 +9,10 @@ class Anggota_model extends CI_Model
    {
       return $this->db->order_by('nama_anggota', 'ASC')->get('anggota')->result_array();
    }
+   public function getAnggotaAktif()
+   {
+      return $this->db->order_by('nama_anggota', 'ASC')->where('sts_anggota', '1')->get('anggota')->result_array();
+   }
 
    public function getById($id)
    {
