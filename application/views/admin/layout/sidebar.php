@@ -49,7 +49,7 @@
          <li <?= $this->uri->segment(1) == "Buku" || $this->uri->segment(2) == "tambahBuku" ? "class='active'" : "" ?>><a href="<?= base_url('Buku') ?>"><i class="fa fa-book"></i> Data Buku</a></li>
          <li class="header">PENGATURAN</li>
          <li <?= $this->uri->segment(1) == "Profil" ? "class='active'" : "" ?>><a href="<?= base_url('Profil') ?>"><i class="fa fa-bank"></i> <span>Profil Perpus</span></a></li>
-         <li <?= $this->uri->segment(1) == "Akun" ? "class='active'" : "" ?>><a href="<?= base_url('Akun') ?>"><i class="fa fa-bank"></i> <span>Akun</span></a></li>
+         <!-- <li <?= $this->uri->segment(1) == "Akun" ? "class='active'" : "" ?>><a href="<?= base_url('Akun') ?>"><i class="fa fa-bank"></i> <span>Akun</span></a></li> -->
       </ul>
    </section>
 </aside>

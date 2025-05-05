@@ -20,12 +20,8 @@ class Buku extends CI_Controller
    public function index()
    {
       $data = ['breadcrumb' => "DATA BUKU", 'data_buku' =>  $this->buku->getAll(), 'js' => 'buku.js'];
-
       $this->viewAdmin('buku/index', $data);
    }
-
-
-
 
    public function tambahBuku()
    {

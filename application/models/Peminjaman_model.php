@@ -63,15 +63,16 @@ class Peminjaman_model extends CI_Model
          $this->db->where('jenis_pinjam', '0');
          $this->db->where('status !=', 'dikembalikan'); // ini poin utamanya
          $peminjaman = $this->db->count_all_results();
+         // log_message('debug', 'Hasil cek buku dipinjam: ' . $this->db->last_query());
          return (int)$peminjaman < 3;
       }
-
       return true;
    }
-   public function periksaBatasPeminjamanKelas($pj1, $pj2)
+
+   public function periksaBatasPeminjamanKelas($kelas)
    {
-      $peminjaman = $this->db->where('pj1', $pj1)->where('pj2', $pj2)->where('jenis_pinjam', '1')->where('status', 'dipinjam')->count_all_results('peminjaman');
-      return $peminjaman > 0;
+      $peminjaman = $this->db->where('kelas', $kelas)->where('status', 'dipinjam')->count_all_results('peminjaman');
+      return $peminjaman < 1;
    }
 
    public function periksaKetersediaanStokBuku($kd_buku)
@@ -88,9 +89,22 @@ class Peminjaman_model extends CI_Model
          ->where('jenis_pinjam', '0')
          ->where('status !=', 'dikembalikan')
          ->count_all_results('peminjaman');
-      return $peminjaman > 0;
+      return $peminjaman < 1;
    }
-   public function simpanPeminjaman($id_peminjaman, $kd_buku, $pj1, $jatu_tempo, $jumlahPinjam, $kd_petugas)
+
+   public function periksaBukuDipinjam($kd_buku, $kelas)
+   {
+      $peminjaman = $this->db
+         ->where('kd_buku', $kd_buku)
+         ->where('kelas', $kelas)
+         // ->where('pj2', $pj2)
+         ->where('jenis_pinjam', '1')
+         ->where('status !=', 'dikembalikan')
+         ->count_all_results('peminjaman');
+      return $peminjaman < 1;
+   }
+
+   public function simpanPeminjaman($id_peminjaman, $kd_buku, $pj1, $jatu_tempo, $jumlahPinjam, $kd_petugas, $pj2 = "")
    {
       $data = array(
          'id_pinjam'     => $id_peminjaman,
@@ -102,10 +116,33 @@ class Peminjaman_model extends CI_Model
          'jenis_pinjam'  => 0,
          'status'        => 'pandding'
       );
+
+      if ($pj2) {
+         $data['pj2'] = $pj2;
+      }
+
       if ($kd_petugas != "0") {
          $data['kd_petugas'] = $kd_petugas;
          $data['status'] = 'dipinjam';
       }
+      return $this->db->insert('peminjaman', $data); // Simpan ke database
+   }
+
+   public function simpanPeminjamanKelas($id_peminjaman, $kd_buku, $pj1, $jatu_tempo, $jumlahPinjam, $kd_petugas, $pj2, $kelas)
+   {
+      $data = array(
+         'id_pinjam'     => $id_peminjaman,
+         'kd_buku'       => $kd_buku,
+         'pj1'           => $pj1,
+         'pj2'           => $pj2,
+         'tgl_pinjam'    => date('Y-m-d H:i:s'),
+         'tgl_kembali'   => $jatu_tempo,
+         'jumlah_pinjam' => $jumlahPinjam,
+         'jenis_pinjam'  => 1,
+         'kd_petugas'    => $kd_petugas,
+         'status'        => 'dipinjam',
+         'kelas'         => $kelas
+      );
       return $this->db->insert('peminjaman', $data); // Simpan ke database
    }
 

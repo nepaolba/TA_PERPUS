@@ -24,7 +24,8 @@
                   <?php foreach ($pengembalian as $key => $value) : ?>
                      <tr>
                         <td>
-                           <a href=""><?= $value['nama_anggota'] ?></a><br>
+                           <a href=""><?= $value['nama_anggota1'] ?></a><br>
+                           <a href=""><?= $value['nama_anggota2'] ?></a><br>
                            <?= $value['kelas'] ?>
                         </td>
                         <td>

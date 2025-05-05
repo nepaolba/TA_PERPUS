@@ -22,6 +22,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-lg-7">
         <div class="box box-solid new-shadow">
             <form action="<?= base_url('Peminjaman/submitPengembalian') ?>" id="addPengembalian" method="post">
