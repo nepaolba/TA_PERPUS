@@ -10,7 +10,7 @@ class Peminjaman_model extends CI_Model
       $query = $this->db->select('*')
          ->from('peminjaman')
          ->join('buku', 'buku.kd_buku = peminjaman.kd_buku')
-         ->join('anggota', 'anggota.kd_anggota = peminjaman.nis_nip')
+         ->join('anggota', 'anggota.kd_anggota = peminjaman.pj1')
          ->join('rak', 'rak.id_rak = buku.id_rak')
          ->join('kategori', 'kategori.kd_kategori = buku.kd_kategori')
          ->join('petugas', 'petugas.kd_petugas = peminjaman.kd_petugas')
