@@ -1,3 +1,17 @@
+<div class="col-lg-12">
+    <div class="article article-style-c">
+        <form method="get" action="<?= base_url('Welcome/koleksi') ?>">
+            <div class="row">
+                <div class="col-lg-10">
+                    <input type="text" name="keyword" class="form-control" placeholder="Cari judul / pengarang / penerbit" value="<?= $this->input->get('keyword') ?>">
+                </div>
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-primary btn-block">Cari</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <?php foreach ($data_buku as $buku): ?>
     <a href="<?= base_url('Welcome/detailkoleksi/' . $buku['kd_buku']) ?>">
         <div class="col-12 col-md-4 col-lg-3">

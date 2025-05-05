@@ -28,14 +28,31 @@ class Welcome extends CI_Controller
    }
    public function koleksi()
    {
+
+      $keyword = $this->input->get('keyword');
+      if ($keyword) {
+         $buku = $this->search($keyword);
+      } else {
+         $buku = $this->buku->getAll();
+      }
+
       $data =  [
          'profil' => $this->profil->getAll(),
-         'data_buku' =>  $this->buku->getAll(),
+         'data_buku' =>  $buku,
       ];
       $this->load->view('user/layout/header');
       $this->load->view('user/koleksi', $data);
       $this->load->view('user/layout/footer');
    }
+
+   public function search($keyword)
+   {
+      $this->db->like('judul_buku', $keyword);
+      $this->db->or_like('penulis', $keyword);
+      $this->db->or_like('penerbit', $keyword);
+      return $this->db->get('buku')->result_array();
+   }
+
    public function detailkoleksi($bookCode)
    {
       $bukuJoinKategori = $this->db->select("*")
@@ -62,24 +79,11 @@ class Welcome extends CI_Controller
    }
    public function kartuAnggota()
    {
-      // $bukuJoinKategori = $this->db->select("*")
-      //    ->from('buku')
-      //    ->join('kategori', 'buku.kd_kategori = kategori.kd_kategori')
-      //    ->where('buku.kd_buku', $bookCode)
-      //    ->get()->row();
 
-      // $rekomendasibuku = $this->db->select("*")
-      //    ->from('buku')
-      //    ->join('kategori', 'buku.kd_kategori = kategori.kd_kategori')
-      //    ->where('buku.penulis',  $bukuJoinKategori->penulis)
-      //    ->get()->result();
       $anggota = $this->anggota->getById($this->session->userdata('id'));
-      // var_dump($anggota);
-
       $data =  [
          'profil' => $this->profil->getAll(),
          'anggota' => $anggota,
-         // 'rekomendasibuku' => $rekomendasibuku
       ];
 
       $this->load->view('user/layout/header');
@@ -150,12 +154,38 @@ class Welcome extends CI_Controller
          ->row();
 
       $data =  [
-         // 'profil' => $this->profil->getAll(),
          'transaksi' => $peminjaman,
       ];
       $this->load->view('user/layout/header');
       $this->load->view('user/bukti', $data);
       $this->load->view('user/layout/footer');
+   }
+   public function profil()
+   {
+      $kdAnggota = $this->session->userdata('id');
+      $this->form_validation->set_rules('nama_anggota', 'Nama', 'trim|required');
+      $this->form_validation->set_rules('jk', 'Jenis Kelamin', 'trim|required');
+      $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
+      $this->form_validation->set_rules('nohp', 'Nomor HP', 'trim|required|min_length[11]');
+
+      $data = ['data' => $this->anggota->getById($kdAnggota)];
+
+      if ($this->form_validation->run() == FALSE) {
+         $this->load->view('user/layout/header');
+         $this->load->view('user/profil', $data);
+         $this->load->view('user/layout/footer');
+      } else {
+         $array = $this->input->post();
+         // $marge = $array + ['password' => password_hash($array['kd_anggota'], PASSWORD_DEFAULT)];
+         $update = $this->db->set($array)->where('kd_anggota', $kdAnggota)->update('anggota');
+         if ($update) {
+            $this->session->set_flashdata(['msg' => "Data Berhasil Diubah", "class" => "success"]);
+            redirect('Welcome/profil');
+         } else {
+            $this->session->set_flashdata(['msg' => "Data Gagal Diubah", "class" => "error"]);
+            redirect('Welcome/profil');
+         }
+      }
    }
 }
 

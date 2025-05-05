@@ -31,11 +31,12 @@
                 <ul class="navbar-nav navbar-right">
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <img alt="image" src="<?= base_url() ?>/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-                            <div class="d-sm-none d-lg-inline-block"><?= $this->session->userdata('nama'); ?></div>
+                            <?php $anggota = $this->anggota->getById($this->session->userdata('id')) ?>
+                            <div class="d-sm-none d-lg-inline-block"><?= $anggota['nama_anggota'] ?></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-title">Logged in 5 min ago</div>
-                            <a href="features-profile.html" class="dropdown-item has-icon">
+                            <!-- <div class="dropdown-title">Logged in 5 min ago</div> -->
+                            <a href="<?= base_url('Welcome/profil') ?>" class="dropdown-item has-icon">
                                 <i class="far fa-user"></i> Profil
                             </a>
                             <a href="<?= base_url('Welcome/daftarPinjam') ?>" class="dropdown-item has-icon">
