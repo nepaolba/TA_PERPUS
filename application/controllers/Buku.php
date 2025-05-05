@@ -69,7 +69,7 @@ class Buku extends CI_Controller
       $queryPeminjaman = $this->db->select('anggota.kd_anggota, anggota.nama_anggota, peminjaman.jumlah_pinjam, peminjaman.tgl_kembali')
          ->from('buku')
          ->join('peminjaman', 'buku.kd_buku=peminjaman.kd_buku')
-         ->join('anggota', 'peminjaman.nis_nip=anggota.kd_anggota')
+         ->join('anggota', 'peminjaman.pj1=anggota.kd_anggota')
          ->where('buku.kd_buku', $kd_buku)
          ->get()->result();
       $queryDetailBuku = $this->db->select('*')
