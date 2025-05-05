@@ -28,7 +28,7 @@ $config['base_url'] .= "://" . $_SERVER['HTTP_HOST'];
 $config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
 // $config['base_url'] = 'http://localhost/perpus/';
-$config['logout_redirect'] = 'Welcome'; // Sesuaikan dengan nama kontroler atau halaman yang sesuai
+$config['logout_redirect'] = 'Auth'; // Sesuaikan dengan nama kontroler atau halaman yang sesuai
 
 /*
 |--------------------------------------------------------------------------

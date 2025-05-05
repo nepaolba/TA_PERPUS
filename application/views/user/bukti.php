@@ -9,7 +9,7 @@
         <div class="card-header">
             <h4>Informasi Peminjaman</h4>
         </div>
-        <div class="card-body">y
+        <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <p><strong>No.Transaksi:</strong> <?= $transaksi->id_pinjam ?></p>
@@ -19,7 +19,7 @@
                 <div class="col-md-6">
                     <p><strong>Nama Peminjam:</strong> <?= $transaksi->nama_anggota ?></p>
                     <p><strong>NIS/NIM:</strong> <?= $transaksi->pj1 ?></p>
-                    <p><strong>Jenis Anggota:</strong> <?= ucfirst($transaksi->jenis_anggota) ?></p>
+                    <p><strong>Jenis Anggota:</strong> <?= $transaksi->jenis_anggota == 0 ? 'Guru':'Siswa' ?></p>
                 </div>
             </div>
             <hr>
@@ -52,9 +52,9 @@
             <a href="<?= site_url('Welcome/daftarPinjam/') ?>" class="btn btn-warning">
                 <i class="fas fa-arrow-circle-left"></i> Kembali
             </a>
-            <a href="<?= site_url('peminjaman/cetak/' . $transaksi->id_pinjam) ?>" class="btn btn-primary" target="_blank">
+            <!-- <a href="<?= site_url('peminjaman/cetak/' . $transaksi->id_pinjam) ?>" class="btn btn-primary" target="_blank">
                 <i class="fas fa-print"></i> Cetak Bukti
-            </a>
+            </a> -->
         </div>
     </div>
 </div>

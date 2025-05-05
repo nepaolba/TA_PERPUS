@@ -61,9 +61,9 @@ class Pinjam extends CI_Controller
 
         if ($this->peminjaman->periksaBatasPeminjaman($pj1)) {
             if ($this->peminjaman->periksaKetersediaanStokBuku($kd_buku)) {
-                var_dump(!$this->peminjaman->periksaBukuSudahDipinjam($kd_buku, $pj1));
-                die();
-                if (!$this->peminjaman->periksaBukuSudahDipinjam($kd_buku, $pj1)) {
+                // var_dump(!$this->peminjaman->periksaBukuSudahDipinjam($kd_buku, $pj1));
+                // die();
+                if ($this->peminjaman->periksaBukuSudahDipinjam($kd_buku, $pj1)) {
                     $simpan = $this->peminjaman->simpanPeminjaman($id_peminjaman, $kd_buku, $pj1, $jatu_tempo, $jumlahPinjam, $kd_petugas);
                     if ($simpan) {
                         $this->buku->updateStokPeminjaman($kd_buku, $jumlahPinjam);
