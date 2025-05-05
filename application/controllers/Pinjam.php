@@ -205,4 +205,31 @@ class Pinjam extends CI_Controller
         }
         // notif('Berhasil diverifikasi', 'success', 'Pinjam');
     }
+    public function hapusPeminjaman($id_peminjaman)
+    {
+        $pinjam = $this->db->where('id_pinjam', $id_peminjaman)->get('peminjaman')->row();
+        $hapus = $this->db->where('id_pinjam', $id_peminjaman)->delete('peminjaman');
+        if ($hapus) {
+            $this->updateJumlahPeminjaman($pinjam->kd_buku, $pinjam->jumlah_pinjam);
+            $this->updateStokPeminjaman($pinjam->kd_buku, $pinjam->jumlah_pinjam);
+            notif('Berhasil dihapus.', 'success', 'Pinjam');
+        } else {
+            notif('Gagal dihapus.', 'error', 'Pinjam');
+        }
+    }
+
+
+    public function updateStokPeminjaman($kd_buku, $jumlahPinjam)
+    {
+        $this->db->set('sisa_stok', 'sisa_stok + ' . (int)$jumlahPinjam, FALSE)
+            ->where('kd_buku', $kd_buku)
+            ->update('buku');
+    }
+
+    public function updateJumlahPeminjaman($kd_buku, $jumlahPinjam)
+    {
+        $this->db->set('jumlah_dipinjam', 'jumlah_dipinjam - ' . (int)$jumlahPinjam, FALSE)
+            ->where('kd_buku', $kd_buku)
+            ->update('buku');
+    }
 }

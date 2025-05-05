@@ -24,9 +24,11 @@ class Anggota extends CI_Controller
 
     public function detail($kdAnggota)
     {
+        // var_dump($this->session->flashdata('kembali'));
         $pinjam = $this->pinjam->joinGetCodeAnggota($kdAnggota);
         $anggota = $this->anggota->getById($kdAnggota);
-        $data = ['breadcrumb' => "DETAIL ANGGOTA", 'data' => $anggota, 'js' => 'anggota.js', 'pinjam' => $pinjam];
+        $kembali = $this->input->get('from') ? $this->input->get('from') : 'anggota';
+        $data = ['breadcrumb' => "DETAIL ANGGOTA", 'data' => $anggota, 'js' => 'anggota.js', 'pinjam' => $pinjam, 'kembali' => $kembali];
         $this->viewAdmin('anggota/detail', $data);
     }
 

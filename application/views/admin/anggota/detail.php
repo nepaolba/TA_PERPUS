@@ -77,7 +77,7 @@
 <div class="row">
    <div class="col-lg-12">
       <?php $link = $this->session->flashdata('kembali');  ?>
-      <a href="<?= base_url($link ? $link : 'Anggota') ?>" class="btn btn-sm bg-orange">KEMBALI</a>
+      <a href="<?= base_url($kembali) ?>" class="btn btn-sm bg-orange">KEMBALI</a>
       <br><br>
    </div>
 </div>

@@ -43,14 +43,14 @@
                            </tr>
                         </thead>
                         <tbody>
-                           <?php $this->session->set_flashdata('kembali', 'Pinjam') ?>
+
                            <?php foreach ($peminjaman as  $pinjam) : ?>
                               <tr>
                                  <td>
                                     <?= $pinjam['id_pinjam'] ?>
                                  </td>
                                  <td>
-                                    <a href="<?= base_url('Anggota/detail/' . $pinjam['pj1']) ?>"><?= $pinjam['nama_anggota'] ?></a>
+                                    <a href="<?= base_url('Anggota/detail/' . $pinjam['pj1'] . '?from=Pinjam') ?>"><?= $pinjam['nama_anggota'] ?></a>
                                  </td>
                                  <td>
                                     <a href="<?= base_url('Buku/detail/' . $pinjam['kd_buku']) ?>"> <?= character_limiter($pinjam['judul_buku'], 70); ?></a>
@@ -290,7 +290,7 @@
                                              </div>
                                              <div class="modal-footer">
                                                 <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><small>Batal</small></button>
-                                                <a href="<?= base_url('Peminjaman/delete/' . $pinjam['id_pinjam'] . '/' . $pinjam['kd_buku'] . '/' . $pinjam['jumlah_pinjam']) ?>" class="btn btn-sm btn-primary"><small>Ya ! Hapus</small></a>
+                                                <a href="<?= base_url('Pinjam/hapusPeminjaman/' . $pinjam['id_pinjam']) ?>" class="btn btn-sm btn-primary"><small>Ya ! Hapus</small></a>
                                              </div>
                                           </div>
                                        </div>

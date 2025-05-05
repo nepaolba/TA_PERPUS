@@ -22,7 +22,7 @@
                         <td><?= $anggota['sts_anggota'] == 0 ? "Guru" : "Siswa" ?></td>
                         <td>
                            <a href="<?= base_url('Anggota/resetPassword/' . $anggota['kd_anggota']) ?>" class="btn btn-xs bg-teal"> <i class="glyphicon glyphicon-zoom-in"></i><small> Reset Password</small></a>
-                           <a href="<?= base_url('Anggota/detail/' . $anggota['kd_anggota']) ?>" class="btn btn-xs bg-teal"> <i class="glyphicon glyphicon-zoom-in"></i><small> DETAIL</small></a>
+                           <a href="<?= base_url('Anggota/detail/' . $anggota['kd_anggota']) . '?from=Anggota' ?>" class="btn btn-xs bg-teal"> <i class="glyphicon glyphicon-zoom-in"></i><small> DETAIL</small></a>
                            <a href="<?= base_url('Anggota/update/' . $anggota['kd_anggota']) ?>" class="btn btn-xs bg-orange"> <i class="glyphicon glyphicon-pencil"></i><small> UBAH</small></a>
                            <a href="#modal<?= $anggota['kd_anggota'] ?>" data-toggle="modal" class="btn btn-xs bg-maroon"><i class="glyphicon glyphicon-trash"></i><small> HAPUS</small></a>
                            <div class="modal fade" id="modal<?= $anggota['kd_anggota'] ?>">
