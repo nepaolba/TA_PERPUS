@@ -22,6 +22,7 @@ class Anggota_model extends CI_Model
    public function insert($data)
    {
       $data['tgl_daftar_anggota'] = date('Y-m-d');
+      $data['sts_anggota'] = 1;
       $insert = $this->db->insert('anggota', $data);
       return $this->db->affected_rows() > 0 ? true : false;
    }

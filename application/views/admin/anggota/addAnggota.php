@@ -12,14 +12,14 @@
          </div>
          <form role="form" method="post" action="<?= base_url('Anggota/add') ?>">
             <div class="box-body">
-               <div class="form-group <?= form_error('status') ? 'has-error' : '' ?>">
+               <div class="form-group <?= form_error('jenis_anggota') ? 'has-error' : '' ?>">
                   <label>Status</label>
-                  <select class="form-control" name="status_anggota">
+                  <select class="form-control" name="jenis_anggota">
                      <option value="">Pilih Jenis Anggota</option>
-                     <option value="0" <?= set_select('status_anggota', '0'); ?>>Guru</option>
-                     <option value="1" <?= set_select('status_anggota', '1'); ?>>Siswa</option>
+                     <option value="0" <?= set_select('jenis_anggota', '0'); ?>>Guru</option>
+                     <option value="1" <?= set_select('jenis_anggota', '1'); ?>>Siswa</option>
                   </select>
-                  <?= form_error('status', '<small class="text-danger"><i class="fa fa-times-circle"></i> ', '</small>') ?>
+                  <?= form_error('jenis_anggota', '<small class="text-danger"><i class="fa fa-times-circle"></i> ', '</small>') ?>
                </div>
                <div class="form-group <?= form_error('kd_anggota') ? 'has-error' : '' ?>">
                   <label for="kd_anggota">NIP/NIS/NIPPPK/Username</label>

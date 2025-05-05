@@ -60,7 +60,7 @@ class Anggota extends CI_Controller
             $this->viewAdmin('anggota/addAnggota', $data);
         } else {
             $array = $this->input->post();
-            $marge = $array + ['password' => password_hash($array['kd_anggota'], PASSWORD_DEFAULT)] + ['sts_anggota'=> 1];
+            $marge = $array + ['password' => password_hash($array['kd_anggota'], PASSWORD_DEFAULT)];
             $insert = $this->anggota->insert($marge);
             if ($insert) {
                 $this->session->set_flashdata(['msg' => "Data Berhasil Disimpan", "class" => "success"]);
