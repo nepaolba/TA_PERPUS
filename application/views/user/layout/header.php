@@ -25,8 +25,6 @@
                 <a href="index.html" class="navbar-brand sidebar-gone-hide">Perpustakaan</a>
                 <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
                 <form class="form-inline ml-auto">
-
-
                 </form>
                 <ul class="navbar-nav navbar-right">
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -35,7 +33,6 @@
                             <div class="d-sm-none d-lg-inline-block"><?= $anggota['nama_anggota'] ?></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <!-- <div class="dropdown-title">Logged in 5 min ago</div> -->
                             <a href="<?= base_url('Welcome/profil') ?>" class="dropdown-item has-icon">
                                 <i class="far fa-user"></i> Profil
                             </a>

@@ -17,17 +17,26 @@ class Welcome extends CI_Controller
 
    public function index()
    {
+      $newbook =  $this->db
+         ->select('buku.*, kategori.kategori') // ambil semua kolom dari buku dan nama kategori
+         ->from('buku')
+         ->join('kategori', 'kategori.kd_kategori = buku.kd_kategori')
+         ->order_by('kd_buku', 'DESC')
+         ->limit(5)
+         ->get()
+         ->result();
       $data =  [
          'profil' => $this->profil->getAll(),
          'slide' => $this->profil->slideGetAll(),
-
+         'newbook' => $newbook
       ];
-      $this->load->view('user/layout/header');
+      // $this->load->view('user/layout/header');
       $this->load->view('user/index', $data);
-      $this->load->view('user/layout/footer');
+      // $this->load->view('user/layout/footer');
    }
    public function koleksi()
    {
+      checkLogin('user');
 
       $keyword = $this->input->get('keyword');
       if ($keyword) {
@@ -55,6 +64,7 @@ class Welcome extends CI_Controller
 
    public function detailkoleksi($bookCode)
    {
+      checkLogin('user');
       $bukuJoinKategori = $this->db->select("*")
          ->from('buku')
          ->join('kategori', 'buku.kd_kategori = kategori.kd_kategori')
@@ -79,6 +89,7 @@ class Welcome extends CI_Controller
    }
    public function kartuAnggota()
    {
+      checkLogin('user');
 
       $anggota = $this->anggota->getById($this->session->userdata('id'));
       $data =  [
@@ -93,6 +104,7 @@ class Welcome extends CI_Controller
 
    public function daftarPinjam()
    {
+      checkLogin('user');
       $peminjaman = $this->db
          ->select('peminjaman.*, buku.kd_buku, buku.judul_buku, buku.penulis')
          ->from('peminjaman')
@@ -113,6 +125,7 @@ class Welcome extends CI_Controller
 
    public function hapusPeminjaman($id_peminjaman)
    {
+      checkLogin('user');
       $pinjam = $this->db->where('id_pinjam', $id_peminjaman)->get('peminjaman')->row();
       $hapus = $this->db->where('id_pinjam', $id_peminjaman)->delete('peminjaman');
       if ($hapus) {
@@ -142,6 +155,7 @@ class Welcome extends CI_Controller
 
    public function bukti($id_peminjaman)
    {
+      checkLogin('user');
       $peminjaman = $this->db
          ->select('peminjaman.*, 
                 buku.kd_buku, buku.judul_buku, buku.penulis, 
@@ -162,6 +176,7 @@ class Welcome extends CI_Controller
    }
    public function profil()
    {
+      checkLogin('user');
       $kdAnggota = $this->session->userdata('id');
       $this->form_validation->set_rules('nama_anggota', 'Nama', 'trim|required');
       $this->form_validation->set_rules('jk', 'Jenis Kelamin', 'trim|required');

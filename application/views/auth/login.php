@@ -73,7 +73,7 @@
         </div>
       </form>
       <br>
-      <a href="<?= base_url() ?>" class="text-center">Kembali Ke Beranda</a><br>
+      <a href="<?= base_url('Welcome') ?>" class="text-center">Kembali Ke Beranda</a><br>
       <!-- <a href="register.html" class="text-center">Buat Akun Baru</a><br><br> -->
     </div>
   </div>
