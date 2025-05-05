@@ -14,10 +14,10 @@
             <div class="box-body">
                <div class="form-group <?= form_error('status') ? 'has-error' : '' ?>">
                   <label>Status</label>
-                  <select class="form-control" name="status_anggota">
+                  <select class="form-control" name="jenis_anggota">
                      <option value="">Pilih Jenis Anggota</option>
-                     <option value="0" <?php echo ($data['status_anggota'] == '0') ? 'selected' : ''; ?>>Guru</option>
-                     <option value="1" <?php echo ($data['status_anggota'] == '1') ? 'selected' : ''; ?>>Siswa</option>
+                     <option value="0" <?php echo ($data['jenis_anggota'] == '0') ? 'selected' : ''; ?>>Guru</option>
+                     <option value="1" <?php echo ($data['jenis_anggota'] == '1') ? 'selected' : ''; ?>>Siswa</option>
                   </select>
                   <?= form_error('status', '<small class="text-danger"><i class="fa fa-times-circle"></i> ', '</small>') ?>
                </div>

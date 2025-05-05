@@ -26,7 +26,7 @@
                <tr>
                   <td>Status</td>
                   <th>:</th>
-                  <td><?= $data['status_anggota'] == '0' ? 'Guru' : 'Siswa' ?></td>
+                  <td><?= $data['sts_anggota'] ?></td>
                </tr>
                <tr>
                   <td>Alamat</td>

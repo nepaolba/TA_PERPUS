@@ -48,7 +48,7 @@ class Anggota extends CI_Controller
 
     public function add()
     {
-        $this->form_validation->set_rules('sts_anggota', 'Status', 'trim|required');
+        $this->form_validation->set_rules('jenis_anggota', 'Jenis', 'trim|required');
         $this->form_validation->set_rules('kd_anggota', 'NIP/NIS/Username', 'trim|required|max_length[20]|is_unique[anggota.kd_anggota]');
         $this->form_validation->set_rules('nama_anggota', 'Nama', 'trim|required');
         $this->form_validation->set_rules('jk', 'Jenis Kelamin', 'trim|required');
@@ -60,7 +60,7 @@ class Anggota extends CI_Controller
             $this->viewAdmin('anggota/addAnggota', $data);
         } else {
             $array = $this->input->post();
-            $marge = $array + ['password' => password_hash($array['kd_anggota'], PASSWORD_DEFAULT)];
+            $marge = $array + ['password' => password_hash($array['kd_anggota'], PASSWORD_DEFAULT)] + ['sts_anggota'=> 1];
             $insert = $this->anggota->insert($marge);
             if ($insert) {
                 $this->session->set_flashdata(['msg' => "Data Berhasil Disimpan", "class" => "success"]);

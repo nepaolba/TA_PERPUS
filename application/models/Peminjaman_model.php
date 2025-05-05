@@ -248,7 +248,7 @@ class Peminjaman_model extends CI_Model
       $this->db->select('peminjaman.*, buku.judul_buku, SUM(peminjaman.jumlah_pinjam) as total_pinjam')
          ->from('peminjaman')
          ->join('buku', 'buku.kd_buku = peminjaman.kd_buku')
-         ->where('nis_nip', $code)
+         ->where('pj1', $code)
          ->group_by('buku.kd_buku, buku.judul_buku');
       return $this->db->get()->result_array();
    }
