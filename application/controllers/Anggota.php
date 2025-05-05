@@ -75,7 +75,7 @@ class Anggota extends CI_Controller
     public function update($kdAnggota)
     {
         $oldKdAnggota = $this->anggota->getById($kdAnggota);
-        $this->form_validation->set_rules('status_anggota', 'Status', 'trim|required');
+        $this->form_validation->set_rules('jenis_anggota', 'Jenis', 'trim|required');
         if ($this->input->post('kd_anggota') !=  $oldKdAnggota['kd_anggota']) {
             $this->form_validation->set_rules('kd_anggota', 'NIP/NIS/Username', 'trim|required|max_length[20]|is_unique[anggota.kd_anggota]');
         }
