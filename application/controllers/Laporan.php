@@ -84,12 +84,12 @@ class Laporan extends CI_Controller
         $length = $this->input->post('length'); // Jumlah data per halaman
         $draw = $this->input->post('draw'); // Untuk keperluan pengulangan permintaan
         $this->db->from('peminjaman');
-        $this->db->join('anggota', 'peminjaman.nis_nip = anggota.kd_anggota');
+        $this->db->join('anggota', 'peminjaman.pj1 = anggota.kd_anggota');
         $this->db->join('buku', 'peminjaman.kd_buku = buku.kd_buku');
         $total_records = $this->db->count_all_results();
         $this->db->select('peminjaman.*, anggota.nama_anggota, buku.judul_buku');
         $this->db->from('peminjaman');
-        $this->db->join('anggota', 'peminjaman.nis_nip = anggota.kd_anggota');
+        $this->db->join('anggota', 'peminjaman.pj1 = anggota.kd_anggota');
         $this->db->join('buku', 'peminjaman.kd_buku = buku.kd_buku');
         if (!empty($start_date) && !empty($end_date)) {
             $this->db->where('tgl_pinjam >=', $start_date);
