@@ -65,8 +65,40 @@
                                  <td class="text-center"><?= $pinjam['status'] ?></td>
                                  <td>
                                     <?php if ($pinjam['status'] != 'dipinjam' && $pinjam['status'] != 'perpanjang'): ?>
-                                       <a href="<?= base_url('Pinjam/verifikasi/' . $pinjam['id_pinjam']) ?>" class="btn btn-success btn-xs mb2"><i class="glyphicon glyphicon-check"></i></a>
+                                       <a href="#modal-ver<?= $pinjam['id_pinjam'] ?>" data-toggle="modal" class="btn btn-success btn-xs mb2"><i class="glyphicon glyphicon-check"></i></a>
+                                       <div class="modal fade" id="modal-ver<?= $pinjam['id_pinjam'] ?>">
+                                          <div class="modal-dialog">
+                                             <div class="modal-content" style="border-radius: 5px;">
+
+                                                <form action="<?= base_url('Pinjam/verifikasi') ?>" method="post">
+                                                   <div class="modal-body">
+                                                      <br>
+                                                      <div class="" style="display: flex; flex-direction: column;align-items: center ">
+                                                         <i class="fa fa-warning text-orange" style="font-size: 5rem;"></i>
+                                                         <h4 class="modal-title text-orange"><strong>Verifikasi</strong></h4>
+                                                         <p class="text-center">Verifikasi Peminjaman Buku </p>
+                                                         <p>Nama Peminjam<strong> : <?= $pinjam['nama_anggota'] ?></strong></p>
+                                                         <p>Judul Buku<strong> : <?= $pinjam['judul_buku'] ?></strong></p>
+                                                         <div class="form-grup">
+                                                            <input type="hidden" class="form-control" value="<?= $pinjam['id_pinjam'] ?>" name="id_pinjam">
+                                                            <input type="date" class="form-control" name="tgl_kembali">
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   <div class="modal-footer">
+                                                      <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><small>Batal</small></button>
+                                                      <button type="submit" class="btn btn-sm btn-primary"><small>Verifikasi</small></button>
+                                                   </div>
+                                                </form>
+
+                                             </div>
+                                          </div>
+                                       </div>
                                     <?php endif; ?>
+
+
+
+
 
 
                                     <?php if ($pinjam['status'] == 'perpanjang') : ?>
@@ -75,6 +107,12 @@
                                        <?php if ($pinjam['kelas'] == '' && $pinjam['status'] != 'pandding'): ?>
                                           <a href="#modal-perpanjang<?= $pinjam['id_pinjam'] ?>" data-toggle="modal" class="btn bg-info btn-xs mb2"><i class="glyphicon glyphicon-zoom-in"></i> <small>Perpanjang</small></a>
                                        <?php endif; ?>
+
+
+
+
+
+
 
                                        <div class="modal fade" id="modal-perpanjang<?= $pinjam['id_pinjam'] ?>">
                                           <div class="modal-dialog modal-sm">

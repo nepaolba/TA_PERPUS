@@ -189,9 +189,20 @@ class Pinjam extends CI_Controller
         $this->db->set('tgl_kembali', $oneWeek)->set('status', 'perpanjang')->where('id_pinjam', $id_pinjam)->update('peminjaman');
         notif('Berhasil diperpanjang', 'success', 'Pinjam');
     }
-    public function verifikasi($id_pinjam)
+    public function verifikasi()
     {
-        $this->db->set('status', 'dipinjam')->where('id_pinjam', $id_pinjam)->update('peminjaman');
-        notif('Berhasil diverifikasi', 'success', 'Pinjam');
+        $id_pinjam = $this->input->post('id_pinjam');
+        $tgl_kembali = $this->input->post('tgl_kembali') . date(" H:i:s");
+        $update = $this->db->set('status', 'dipinjam')
+            ->set('tgl_kembali', $tgl_kembali)
+            ->where('id_pinjam', $id_pinjam)
+            ->update('peminjaman');
+
+        if ($update) {
+            notif('Berhasil diverifikasi', 'success', 'Pinjam');
+        } else {
+            notif('Gagal diverifikasi', 'error', 'Pinjam');
+        }
+        // notif('Berhasil diverifikasi', 'success', 'Pinjam');
     }
 }
