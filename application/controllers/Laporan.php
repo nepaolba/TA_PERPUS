@@ -46,7 +46,7 @@ class Laporan extends CI_Controller
         $this->db->from('pengembalian');
         $this->db->join('peminjaman', 'peminjaman.id_pinjam = pengembalian.id_pinjam');
         $this->db->join('buku', 'buku.kd_buku = peminjaman.kd_buku');
-        $this->db->join('anggota', 'anggota.kd_anggota = peminjaman.nis_nip');
+        $this->db->join('anggota', 'anggota.kd_anggota = peminjaman.pj1');
         $total_records =  $this->db->count_all_results();
         $this->db->select('*');
         $this->db->from('pengembalian');
@@ -55,7 +55,7 @@ class Laporan extends CI_Controller
         $this->db->join('rak', 'rak.id_rak = buku.id_rak');
         $this->db->join('kategori', 'kategori.kd_kategori = buku.kd_kategori');
         $this->db->join('petugas', 'petugas.kd_petugas = pengembalian.kd_petugas');
-        $this->db->join('anggota', 'anggota.kd_anggota = peminjaman.nis_nip');
+        $this->db->join('anggota', 'anggota.kd_anggota = peminjaman.pj1');
         if (!empty($start_date) && !empty($end_date)) {
             $this->db->where('tgl >=', $start_date);
             $this->db->where('tgl <=', $end_date);
