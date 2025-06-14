@@ -92,7 +92,7 @@ class Buku extends CI_Controller
       if ($upload_image) {
          $config['upload_path'] = './assets/dist/img/buku/';
          $config['allowed_types'] = 'gif|jpg|png|jpeg';
-         $config['max_size']  = '2000';
+         $config['max_size']  = '6000';
          $this->load->library('upload', $config);
          if ($this->upload->do_upload($name)) {
             return $this->upload->data('file_name');

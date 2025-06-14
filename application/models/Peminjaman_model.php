@@ -28,7 +28,7 @@ class Peminjaman_model extends CI_Model
          ->join('anggota', 'anggota.kd_anggota = peminjaman.pj1')
          ->join('rak', 'rak.id_rak = buku.id_rak')
          ->join('kategori', 'kategori.kd_kategori = buku.kd_kategori')
-         // ->join('petugas', 'petugas.kd_petugas = peminjaman.kd_petugas')
+         ->join('petugas', 'petugas.kd_petugas = peminjaman.kd_petugas', 'left')
          ->where('peminjaman.status !=', 'dikembalikan')
          ->where('peminjaman.jenis_pinjam =', 0)
          ->order_by('peminjaman.id_pinjam', 'DESC')
@@ -255,13 +255,27 @@ class Peminjaman_model extends CI_Model
 
    public function getJumlahPeminjamanPerBulan($tahun)
    {
-      $this->db->select('MONTH(tgl_pinjam) AS bulan, COUNT(*) AS jumlah_peminjaman');
+      // Ambil jumlah peminjaman per bulan
+      $this->db->select('MONTH(tgl_pinjam) AS bulan, COUNT(*) AS jumlah');
       $this->db->from('peminjaman');
       $this->db->where('YEAR(tgl_pinjam)', $tahun);
-      $this->db->group_by('bulan');
-      $this->db->order_by('bulan');
-      $query = $this->db->get();
-      return $query->result_array();
+      $this->db->group_by('MONTH(tgl_pinjam)');
+      $query1 = $this->db->get();
+      $peminjaman = $query1->result_array();
+
+
+      // Ambil jumlah pengembalian per bulan dari tabel pengembalian
+      $this->db->select('MONTH(tgl) AS bulan, COUNT(*) AS jumlah');
+      $this->db->from('pengembalian');
+      $this->db->where('YEAR(tgl)', $tahun);
+      $this->db->group_by('MONTH(tgl)');
+      $query2 = $this->db->get();
+      $pengembalian = $query2->result_array();
+
+      return [
+         'peminjaman' => $peminjaman,
+         'pengembalian' => $pengembalian
+      ];
    }
 
    public function getJumlahPeminjamHariIni()

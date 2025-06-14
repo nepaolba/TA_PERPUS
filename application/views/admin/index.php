@@ -12,7 +12,7 @@
         <div class="info-box new-shadow d-flex align-items-center">
             <span class="info-box-icon bg-white d-flex justify-content-center align-items-center"><i class="fa fa-book text-teal"></i></span>
             <div class="info-box-content ml-0">
-                <span class="info-box-text">BUKU</span>
+                <span class="info-box-text">Judul BUKU</span>
                 <span class="info-box-number"><?= $count_book; ?></span>
             </div>
         </div>
@@ -194,16 +194,48 @@
 <script src="<?= base_url('assets/') ?>bower_components/jquery/dist/jquery.min.js"></script>
 
 
+<script src="<?= base_url('assets/') ?>bower_components/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-    const grafikData = <?php echo json_encode($grafik); ?>;
-    const labels = grafikData.map(item => getNamaBulan(item.bulan));
-    const peminjamanData = grafikData.map(item => item.jumlah_peminjaman);
+    const labels = [
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
 
-    function getNamaBulan($nomor_bulan) {
-        const nama_bulan = [
-            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-        ];
+    const dataPeminjaman = <?= json_encode($peminjaman); ?>;
+    const dataPengembalian = <?= json_encode($pengembalian); ?>;
 
-        return nama_bulan[$nomor_bulan - 1];
-    }
+    const ctx = document.getElementById('barChart').getContext('2d');
+
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                    label: 'Peminjaman',
+                    data: dataPeminjaman,
+                    backgroundColor: 'rgb(54, 163, 235)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Pengembalian',
+                    data: dataPengembalian,
+                    backgroundColor: 'rgb(255, 99, 133)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    precision: 0
+                }
+            }
+        }
+    });
 </script>

@@ -195,6 +195,7 @@ class Pinjam extends CI_Controller
         $tgl_kembali = $this->input->post('tgl_kembali') . date(" H:i:s");
         $update = $this->db->set('status', 'dipinjam')
             ->set('tgl_kembali', $tgl_kembali)
+            ->set('kd_petugas', $this->session->userdata('id'))
             ->where('id_pinjam', $id_pinjam)
             ->update('peminjaman');
 

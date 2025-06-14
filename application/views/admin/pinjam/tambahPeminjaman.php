@@ -15,6 +15,9 @@
                             <ul>
                                 <li style="list-style: none; display:flex;align-items: center; margin-left: -25px;font-size: 15px;"><i class="fa fa-info-circle" style="font-size: 25px;"></i> &nbsp;INFORMASI</li>
                                 <li> 1 anggota hanya dapat meminjam 3 buku yang berbeda </li>
+                                <li> 1 anggota hanya dapat melakukan peminjaman pertama selama 3 hari </li>
+                                <li> Masa lama perpanjang peminjaman 1 minggu / 7 hari</li>
+                                <li> Perpanjang peminjaman hanya bisa dilakukan satu kali</li>
                                 <li> Jika peminjaman sudah mencapai maksimal peminjaman maka peminjaman tidak dapat dilakukan </li>
                             </ul>
                         </div>
@@ -140,7 +143,7 @@
                     <div class="form-group">
                         <label for="jumlah_buku" class="col-sm-2 control-label">Jumlah Buku</label>
                         <div class="col-sm-2">
-                            <input type="text" id="jumlah_buku" name="jumlah_buku" class="form-control">
+                            <input type="number" id="jumlah_buku" name="jumlah_buku" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">

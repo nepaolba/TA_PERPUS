@@ -45,7 +45,16 @@
                   <div class="col-lg-6">
                      <div class="form-group">
                         <label for="tahun_terbit">Tahun Terbit</label>
-                        <input type="text" name="tahun_terbit" id="tahun_terbit" class="form-control" placeholder="Masukan tahun terbit">
+                        <select name="tahun_terbit" id="tahun_terbit" class="form-control select2">
+                           <option value="">Pilih Tahun</option>
+                           <script>
+                              // Generate tahun dari 1900 sampai tahun sekarang + 10
+                              const tahunSekarang = new Date().getFullYear();
+                              for (let tahun = tahunSekarang; tahun >= 1990; tahun--) {
+                                 document.write(`<option value="${tahun}">${tahun}</option>`);
+                              }
+                           </script>
+                        </select>
                      </div>
                   </div>
                </div>
@@ -60,6 +69,7 @@
                            <?php endforeach; ?>
                         </select>
                      </div>
+
                   </div>
                   <div class="col-lg-6">
                      <div class="form-group">
@@ -73,10 +83,16 @@
                      </div>
                   </div>
                </div>
-               <div class="form-group">
-                  <label for="jumlah_buku">Jumlah Buku</label>
-                  <input type="text" name="jumlah_buku" id="jumlah_buku" class="form-control" placeholder="Masukan Jumlah Buku">
+
+               <div class="row">
+                  <div class="col-lg-2">
+                     <div class="form-group">
+                        <label for="jumlah_buku">Jumlah Buku</label>
+                        <input type="number" name="jumlah_buku" id="jumlah_buku" class="form-control" placeholder="Jumlah Buku">
+                     </div>
+                  </div>
                </div>
+
                <div class="form-group">
                   <label for="jumlah_buku">Sinopsis</label>
                   <textarea name="sinopsis" id="sinopsis" class="form-control" style="height: 200px;"></textarea>

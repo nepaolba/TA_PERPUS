@@ -33,6 +33,7 @@
                         <td>
                            <a href="<?= base_url('Buku/detail/' . $book['kd_buku']) ?>" class="btn btn-xs bg-teal"><i class="glyphicon glyphicon-zoom-in"></i><small> Detail</small></a>
                            <a href="<?= base_url('Buku/update/' . $book['kd_buku']) ?>" class="btn btn-xs bg-orange"><i class="glyphicon glyphicon-pencil"></i><small> Edit</small></a>
+                           <a href="<?= base_url('Buku/update/' . $book['kd_buku']) ?>" class="btn btn-xs bg-orange"><i class="glyphicon glyphicon-pencil"></i><small>Cetak Nomor Buku</small></a>
                            <a href="#modal-delete<?= $book['kd_buku'] ?>" data-toggle="modal" class="btn btn-xs bg-maroon"><i class="glyphicon glyphicon-trash"></i><small> Hapus</small></a>
                            <div class="modal fade" id="modal-delete<?= $book['kd_buku'] ?>">
                               <div class="modal-dialog modal-sm">

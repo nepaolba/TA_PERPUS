@@ -24,8 +24,11 @@
                      <div class="alert alert-info alert-custom">
                         <ul>
                            <li style="list-style: none; display:flex;align-items: center; margin-left: -25px; font-size: 15px;"><i class="fa fa-info-circle" style="font-size: 25px;"></i> &nbsp;INFORMASI</li>
-                           <li> Perpanjang peminjaman hanya bisa dilakukan satu kali</li>
+                           <li> 1 anggota hanya dapat meminjam 3 buku yang berbeda </li>
+                           <li> 1 anggota hanya dapat melakukan peminjaman pertama selama 3 hari </li>
                            <li> Masa lama perpanjang peminjaman 1 minggu / 7 hari</li>
+                           <li> Perpanjang peminjaman hanya bisa dilakukan satu kali</li>
+                           <li> Jika peminjaman sudah mencapai maksimal peminjaman maka peminjaman tidak dapat dilakukan </li>
                         </ul>
                      </div>
 
@@ -229,17 +232,49 @@
                                                          <div class="info-box-content ml-0">
                                                             <span class="info-box-text fs-12">Deadline</span>
                                                             <?php
-                                                            $tanggal_sekarang = new DateTime(date("Y-m-d"));
-                                                            $tanggal_pinjam = new DateTime($pinjam['tgl_pinjam']);
+                                                            $tanggal_sekarang = new DateTime();
                                                             $tanggal_jatuh_tempo = new DateTime($pinjam['tgl_kembali']);
-                                                            $selisih = $tanggal_sekarang->diff($tanggal_jatuh_tempo);
-                                                            // var_dump($selisih->days);
+
                                                             if ($tanggal_sekarang > $tanggal_jatuh_tempo) {
-                                                               echo '<span class="info-box-number"><small>Terlambat </small>' . $selisih->days . '<small> Hari</small></span>';
+                                                               // Sudah lewat jatuh tempo = terlambat
+                                                               $selisih = $tanggal_jatuh_tempo->diff($tanggal_sekarang);
+                                                               $status = 'terlambat';
                                                             } else {
-                                                               echo '<span class="info-box-number">' . $selisih->days . '<small> Hari lagi</small></span>';
+                                                               // Belum lewat jatuh tempo = sisa waktu pengembalian
+                                                               $selisih = $tanggal_sekarang->diff($tanggal_jatuh_tempo);
+                                                               $status = 'sisa';
                                                             }
+
+                                                            $hari = $selisih->d;
+                                                            $jam = $selisih->h;
+                                                            $menit = $selisih->i;
+
+                                                            echo '<span class="info-box-number">';
+
+                                                            if ($status === 'terlambat') {
+                                                               echo '<small>Terlambat: </small>';
+                                                            } else {
+                                                               echo '<small>Sisa waktu pengembalian: </small>';
+                                                            }
+
+                                                            // Jika semuanya 0 (tepat waktu), tampilkan kalimat khusus
+                                                            if ($hari == 0 && $jam == 0 && $menit == 0) {
+                                                               echo 'Beberapa saat lagi';
+                                                            } else {
+                                                               if ($hari > 0) {
+                                                                  echo $hari . ' Hari ';
+                                                               }
+                                                               if ($jam > 0) {
+                                                                  echo $jam . ' Jam ';
+                                                               }
+                                                               if ($menit > 0) {
+                                                                  echo $menit . ' Menit';
+                                                               }
+                                                            }
+
+                                                            echo '</span>';
                                                             ?>
+
                                                          </div>
                                                       </div>
                                                    </div>
@@ -507,7 +542,7 @@
                                              </div>
                                              <div class="modal-footer">
                                                 <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><small>Batal</small></button>
-                                                <a href="<?= base_url('Peminjaman/delete/' . $pinjam['id_pinjam'] . '/' . $pinjam['kd_buku'] . '/' . $pinjam['jumlah_pinjam']) ?>" class="btn btn-sm btn-primary"><small>Ya ! Hapus</small></a>
+                                                <a href="<?= base_url('Pinjam/hapusPeminjaman/' . $pinjam['id_pinjam']) ?>" class="btn btn-sm btn-primary"><small>Ya ! Hapus</small></a>
                                              </div>
                                           </div>
                                        </div>

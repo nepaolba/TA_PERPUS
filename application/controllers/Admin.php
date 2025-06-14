@@ -19,7 +19,33 @@ class Admin extends CI_Controller
 
     public function index()
     {
-        $tahun_ini = date('Y');
+        $tahun = date('Y');
+        $data_db = $this->pinjam->getJumlahPeminjamanPerBulan($tahun);
+        // Inisialisasi array kosong 12 bulan (1–12)
+        $peminjaman = array_fill(1, 12, 0);
+        $pengembalian = array_fill(1, 12, 0);
+
+        // Isi data peminjaman
+        foreach ($data_db['peminjaman'] as $item) {
+            if (isset($item['bulan'])) {
+                $bulan = (int) $item['bulan'];
+                $peminjaman[$bulan] = (int) $item['jumlah'];
+            }
+        }
+
+        // Isi data pengembalian
+        foreach ($data_db['pengembalian'] as $item) {
+            if (isset($item['bulan'])) {
+                $bulan = (int) $item['bulan'];
+                $pengembalian[$bulan] = (int) $item['jumlah'];
+            }
+        }
+
+        // Reset array ke 0-based index
+
+
+
+
         $data = [
             'breadcrumb' => "DASHBOARD",
             'js' => 'dashboard.js',
@@ -30,7 +56,11 @@ class Admin extends CI_Controller
             'count_rak' => $this->rak->countRak(),
             'count_stok' => $this->book->countStok(),
             'count_kategori' => $this->kategori->countKategori(),
-            'grafik' => $this->pinjam->getJumlahPeminjamanPerBulan($tahun_ini),
+            'tahun' => $tahun,
+            'peminjaman' => array_values($peminjaman),   // convert ke 0-based index
+            'pengembalian' => array_values($pengembalian),
+
+            // 'grafik' => array_values($grafik),
             'jumlah_anggota_baru' => $this->anggota->getJumlahAnggotaBaruHariIni(),
             'laporan_pinjam' => $this->pinjam->getJumlahPeminjamHariIni(),
             'laporan_kembali' => $this->kembali->getJumlahPengembalianHariIni(),
@@ -46,25 +76,22 @@ class Admin extends CI_Controller
         $JPinjam = $this->input->post('jenisPinjam');
         $type = $this->input->post('jns');
 
-        if($type == 'Peminjaman'){
-            if($JPinjam == '0'){
+        if ($type == 'Peminjaman') {
+            if ($JPinjam == '0') {
                 redirect('Peminjaman/individu');
             }
-            if($JPinjam == '1'){
+            if ($JPinjam == '1') {
                 redirect('Peminjaman/kelompok');
             }
         }
 
-        if($type == 'Pengembalian'){
-            if($JPinjam == '0'){
+        if ($type == 'Pengembalian') {
+            if ($JPinjam == '0') {
                 redirect('Pengembalian/individu');
             }
-            if($JPinjam == '1'){
+            if ($JPinjam == '1') {
                 redirect('Pengembalian/kelompok');
             }
         }
-
     }
-
-
 }

@@ -40,6 +40,49 @@
                                     <?php else: ?>
                                         <div class="badge badge-success">Completed</div>
                                     <?php endif ?>
+                                    <?php
+                                    $tanggal_sekarang = new DateTime();
+                                    $tanggal_jatuh_tempo = new DateTime($pj->tgl_kembali);
+
+                                    if ($tanggal_sekarang > $tanggal_jatuh_tempo) {
+                                        // Sudah lewat jatuh tempo = terlambat
+                                        $selisih = $tanggal_jatuh_tempo->diff($tanggal_sekarang);
+                                        $status = 'terlambat';
+                                    } else {
+                                        // Belum lewat jatuh tempo = sisa waktu pengembalian
+                                        $selisih = $tanggal_sekarang->diff($tanggal_jatuh_tempo);
+                                        $status = 'sisa';
+                                    }
+
+                                    $hari = $selisih->d;
+                                    $jam = $selisih->h;
+                                    $menit = $selisih->i;
+
+                                    echo '<span class="info-box-number">';
+
+                                    if ($status === 'terlambat') {
+                                        echo '<small>Terlambat: </small>';
+                                    } else {
+                                        echo '<small> Jatuh Tempo: </small>';
+                                    }
+
+                                    // Jika semuanya 0 (tepat waktu), tampilkan kalimat khusus
+                                    if ($hari == 0 && $jam == 0 && $menit == 0) {
+                                        echo 'Beberapa saat lagi';
+                                    } else {
+                                        if ($hari > 0) {
+                                            echo $hari . ' Hari ';
+                                        }
+                                        if ($jam > 0) {
+                                            echo $jam . ' Jam ';
+                                        }
+                                        if ($menit > 0) {
+                                            echo $menit . ' Menit';
+                                        }
+                                    }
+
+                                    echo '</span>';
+                                    ?>
                                 </td>
                                 <td>
                                     <?php if ($pj->status == 'pandding'): ?>

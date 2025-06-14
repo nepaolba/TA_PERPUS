@@ -68,6 +68,7 @@ class Welcome extends CI_Controller
       $bukuJoinKategori = $this->db->select("*")
          ->from('buku')
          ->join('kategori', 'buku.kd_kategori = kategori.kd_kategori')
+         ->join('rak', 'buku.id_rak = rak.id_rak')
          ->where('buku.kd_buku', $bookCode)
          ->get()->row();
 

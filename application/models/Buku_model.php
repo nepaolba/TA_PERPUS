@@ -87,7 +87,6 @@ class Buku_model extends CI_Model
       $this->db->join('kategori', 'kategori.kd_kategori = ' . $this->tabel . '.kd_kategori');
       $this->db->join('rak', 'rak.id_rak = ' . $this->tabel . '.id_rak');
       $this->db->where($this->tabel . '.' . $this->kd_buku, $code_book);
-      // $this->db->where($this->tabel . '.' . $this->kd, $code_book);
       $this->db->group_by($this->tabel . '.kd_buku');
       return $this->db->get()->row_array();
    }

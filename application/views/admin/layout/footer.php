@@ -38,7 +38,7 @@
 <script src="<?= base_url('assets/') ?>plugins/iCheck/icheck.min.js"></script>
 <script src="<?= base_url('assets/') ?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <script src="<?= base_url('assets/') ?>bower_components/fastclick/lib/fastclick.js"></script>
-<script src="<?= base_url('assets/') ?>bower_components/chart.js/Chart.js"></script>
+
 <script src="<?= base_url('assets/') ?>plugins/input-mask/jquery.inputmask.js"></script>
 <script src="<?= base_url('assets/') ?>dist/js/adminlte.min.js"></script>
 <script src="<?= base_url('assets/') ?>dist/js/pages/<?= $js ?>"></script>
